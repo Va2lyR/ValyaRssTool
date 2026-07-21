@@ -1,4 +1,9 @@
 
+# CONFIG: GitHub repository details
+$GITHUB_USERNAME = "Va2lyR"          # Your GitHub username
+$GITHUB_REPO = "ValyaRssTool"        # Your repository name
+$BRANCH = "main"                     # Default branch (usually "main" or "master")
+
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 Add-Type -AssemblyName System.Runtime.InteropServices
@@ -324,22 +329,41 @@ $statusLabel.BackColor = [System.Drawing.Color]::Transparent
 $statusPanel.Controls.Add($statusLabel)
 
 # ==============================================================================
-# CUSTOM GRADIENT LAUNCH BUTTON
+# CUSTOM GRADIENT LAUNCH BUTTONS
 # ==============================================================================
-$launchBtn = New-Object GradientButton
-$launchBtn.Text = "▶ LAUNCH VALYARSSTOOL"
-$launchBtn.Font = New-Object System.Drawing.Font("Segoe UI", 15, [System.Drawing.FontStyle]::Bold)
-$launchBtn.Size = New-Object System.Drawing.Size(400, 56)
-$launchBtn.Location = New-Object System.Drawing.Point(80, 440)
-$launchBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
-$mainPanel.Controls.Add($launchBtn)
+# Button 1: Run Local File
+$launchLocalBtn = New-Object GradientButton
+$launchLocalBtn.Text = "💻 RUN LOCAL FILE"
+$launchLocalBtn.Font = New-Object System.Drawing.Font("Segoe UI", 13, [System.Drawing.FontStyle]::Bold)
+$launchLocalBtn.Size = New-Object System.Drawing.Size(260, 52)
+$launchLocalBtn.Location = New-Object System.Drawing.Point(20, 440)
+$launchLocalBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
+$mainPanel.Controls.Add($launchLocalBtn)
 
-$launchBtn.Add_Click({
+$launchLocalBtn.Add_Click({
     $statusDot.BackColor = $colors.accent
-    $statusLabel.Text = "🚀 Launching ValyaRssTool..."
+    $statusLabel.Text = "🚀 Launching local ValyaRssTool..."
     $statusLabel.ForeColor = $colors.accent
     $scriptPath = Join-Path $PSScriptRoot "SSToolsHub.ps1"
     Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-File", $scriptPath
+    $form.Close()
+})
+
+# Button 2: Download from GitHub
+$launchGitHubBtn = New-Object GradientButton
+$launchGitHubBtn.Text = "🌐 DOWNLOAD FROM GITHUB"
+$launchGitHubBtn.Font = New-Object System.Drawing.Font("Segoe UI", 13, [System.Drawing.FontStyle]::Bold)
+$launchGitHubBtn.Size = New-Object System.Drawing.Size(260, 52)
+$launchGitHubBtn.Location = New-Object System.Drawing.Point(280, 440)
+$launchGitHubBtn.Cursor = [System.Windows.Forms.Cursors]::Hand
+$mainPanel.Controls.Add($launchGitHubBtn)
+
+$launchGitHubBtn.Add_Click({
+    $statusDot.BackColor = $colors.accent
+    $statusLabel.Text = "🌐 Downloading ValyaRssTool from GitHub..."
+    $statusLabel.ForeColor = $colors.accent
+    $githubUrl = "https://raw.githubusercontent.com/$GITHUB_USERNAME/$GITHUB_REPO/refs/heads/$BRANCH/SSToolsHub.ps1"
+    Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-c", "irm `"$githubUrl` | iex"
     $form.Close()
 })
 
@@ -348,9 +372,14 @@ $launchBtn.Add_Click({
 # ==============================================================================
 $form.Add_KeyDown({
     if ($_.KeyCode -eq "Escape") { $form.Close() }
-    if ($_.KeyCode -eq "Enter") {
+    if ($_.KeyCode -eq "Enter" -and -not $_.Control) {
         $scriptPath = Join-Path $PSScriptRoot "SSToolsHub.ps1"
         Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-File", $scriptPath
+        $form.Close()
+    }
+    if ($_.KeyCode -eq "Enter" -and $_.Control) {
+        $githubUrl = "https://raw.githubusercontent.com/$GITHUB_USERNAME/$GITHUB_REPO/refs/heads/$BRANCH/SSToolsHub.ps1"
+        Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-c", "irm `"$githubUrl` | iex"
         $form.Close()
     }
 })
