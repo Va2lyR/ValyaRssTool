@@ -22,7 +22,6 @@ $ProgressPreference = 'SilentlyContinue'
 try {
     Add-Type -AssemblyName System.Windows.Forms -ErrorAction Stop
     Add-Type -AssemblyName System.Drawing -ErrorAction Stop
-    Add-Type -AssemblyName System.ComponentModel -ErrorAction Stop
 } catch {
     Write-Host "ERROR: Failed to load required .NET assemblies. $_" -ForegroundColor Red
     exit 1
@@ -80,19 +79,19 @@ $script:theme = @{
 
 # --- Category Colors ---
 $script:categoryColors = @{
-    "Client Detection" = [System.Drawing.Color]::FromArgb(244, 67, 54)
-    "Minecraft"        = [System.Drawing.Color]::FromArgb(76, 175, 80)
-    "Network"          = [System.Drawing.Color]::FromArgb(33, 150, 243)
-    "Remote Access"    = [System.Drawing.Color]::FromArgb(156, 39, 176)
-    "Macro Detection"  = [System.Drawing.Color]::FromArgb(255, 152, 0)
-    "File Analysis"    = [System.Drawing.Color]::FromArgb(0, 188, 212)
-    "Account Detection"= [System.Drawing.Color]::FromArgb(233, 30, 99)
-    "System"           = [System.Drawing.Color]::FromArgb(103, 58, 183)
-    "Forensic"         = [System.Drawing.Color]::FromArgb(63, 81, 181)
-    "Security"         = [System.Drawing.Color]::FromArgb(0, 150, 136)
-    "Multi-Tool"       = [System.Drawing.Color]::FromArgb(121, 85, 72)
-    "Quick Check"      = [System.Drawing.Color]::FromArgb(255, 193, 7)
-    "Utility"          = [System.Drawing.Color]::FromArgb(96, 125, 139)
+    "Client Detection"  = [System.Drawing.Color]::FromArgb(244, 67, 54)
+    "Minecraft"         = [System.Drawing.Color]::FromArgb(76, 175, 80)
+    "Network"           = [System.Drawing.Color]::FromArgb(33, 150, 243)
+    "Remote Access"     = [System.Drawing.Color]::FromArgb(156, 39, 176)
+    "Macro Detection"   = [System.Drawing.Color]::FromArgb(255, 152, 0)
+    "File Analysis"     = [System.Drawing.Color]::FromArgb(0, 188, 212)
+    "Account Detection" = [System.Drawing.Color]::FromArgb(233, 30, 99)
+    "System"            = [System.Drawing.Color]::FromArgb(103, 58, 183)
+    "Forensic"          = [System.Drawing.Color]::FromArgb(63, 81, 181)
+    "Security"          = [System.Drawing.Color]::FromArgb(0, 150, 136)
+    "Multi-Tool"        = [System.Drawing.Color]::FromArgb(121, 85, 72)
+    "Quick Check"       = [System.Drawing.Color]::FromArgb(255, 193, 7)
+    "Utility"           = [System.Drawing.Color]::FromArgb(96, 125, 139)
 }
 
 # --- Main Window Setup ---
@@ -105,7 +104,7 @@ $mainForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::Sizable
 $mainForm.MinimumSize = New-Object System.Drawing.Size(900, 600)
 $mainForm.MaximizeBox = $true
 $mainForm.Icon = [System.Drawing.SystemIcons]::Shield
-$mainForm.DoubleBuffered = $true
+$mainForm.KeyPreview = $true
 
 # --- Header Panel ---
 $headerPanel = New-Object System.Windows.Forms.Panel
@@ -142,7 +141,7 @@ $lblStatus.Location = New-Object System.Drawing.Point(27, 78)
 $lblStatus.AutoSize = $true
 $headerPanel.Controls.Add($lblStatus)
 
-# --- Search & Filter Panel (Right side of header) ---
+# --- Search & Filter Panel ---
 $filterPanel = New-Object System.Windows.Forms.Panel
 $filterPanel.Size = New-Object System.Drawing.Size(420, 80)
 $filterPanel.Location = New-Object System.Drawing.Point(650, 10)
@@ -202,7 +201,7 @@ $lblCount.Location = New-Object System.Drawing.Point(330, 8)
 $lblCount.AutoSize = $true
 $filterPanel.Controls.Add($lblCount)
 
-# --- Main Container (Split: Sidebar + Content) ---
+# --- Main Container ---
 $mainContainer = New-Object System.Windows.Forms.Panel
 $mainContainer.Dock = [System.Windows.Forms.DockStyle]::Fill
 $mainContainer.BackColor = $script:theme.Bg
@@ -233,7 +232,7 @@ $statusLabel.Text = "Hover over a tool to see details | Double-click card to run
 $statusLabel.Font = New-Object System.Drawing.Font("Segoe UI", 9)
 $statusBar.Items.Add($statusLabel)
 
-# --- Progress Bar (Hidden by default) ---
+# --- Progress Bar ---
 $progressBar = New-Object System.Windows.Forms.ProgressBar
 $progressBar.Size = New-Object System.Drawing.Size(200, 5)
 $progressBar.Location = New-Object System.Drawing.Point(450, 50)
@@ -242,31 +241,27 @@ $progressBar.Visible = $false
 $progressBar.BackColor = $script:theme.Accent
 $headerPanel.Controls.Add($progressBar)
 
-# --- Execution Handler (Robust & Secure) ---
+# --- Execution Handler ---
 function Invoke-ToolExecution {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
         [string]$Url,
-
         [Parameter(Mandatory)]
         [string]$Name
     )
 
     try {
-        # Validate URL
         if ([string]::IsNullOrWhiteSpace($Url)) {
             throw "URL is missing for this tool."
         }
 
         $cleanUrl = $Url.Trim()
 
-        # Validate URL format
         if (-not ($cleanUrl -match '^https?://')) {
             throw "Invalid URL format. Only HTTP/HTTPS URLs are supported."
         }
 
-        # Security: Only allow GitHub raw URLs
         if (-not ($cleanUrl -match '^https://raw\.githubusercontent\.com/')) {
             $result = [System.Windows.Forms.MessageBox]::Show(
                 "This tool is not from a trusted source (GitHub).`n`nURL: $cleanUrl`n`nDo you want to continue anyway?",
@@ -283,17 +278,16 @@ function Invoke-ToolExecution {
         $script:lblStatus.ForeColor = $script:theme.Warning
         $script:progressBar.Visible = $true
 
-        # Construct secure execution command
         $executionCommand = @"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 `$Host.UI.RawUI.WindowTitle = 'ValyaRssTool - $Name'
 Write-Host ''
-Write-Host '╔════════════════════════════════════════════════════════════╗' -ForegroundColor Cyan
-Write-Host '║  ValyaRssTool - Executing: $Name' -ForegroundColor Cyan
-Write-Host '╠════════════════════════════════════════════════════════════╣' -ForegroundColor Cyan
-Write-Host '║  Source: $cleanUrl' -ForegroundColor Gray
-Write-Host '║  Time:   `$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')' -ForegroundColor Gray
-Write-Host '╚════════════════════════════════════════════════════════════╝' -ForegroundColor Cyan
+Write-Host '============================================================' -ForegroundColor Cyan
+Write-Host '  ValyaRssTool - Executing: $Name' -ForegroundColor Cyan
+Write-Host '============================================================' -ForegroundColor Cyan
+Write-Host '  Source: $cleanUrl' -ForegroundColor Gray
+Write-Host '  Time:   `$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')' -ForegroundColor Gray
+Write-Host '============================================================' -ForegroundColor Cyan
 Write-Host ''
 try {
     irm '$cleanUrl' -ErrorAction Stop | iex
@@ -304,7 +298,6 @@ try {
 }
 "@
 
-        # Launch in new PowerShell window with elevated privileges check
         $startInfo = New-Object System.Diagnostics.ProcessStartInfo
         $startInfo.FileName = "powershell.exe"
         $startInfo.Arguments = "-NoExit -ExecutionPolicy Bypass -Command `"$executionCommand`""
@@ -330,7 +323,7 @@ try {
     }
 }
 
-# --- Card Creation Engine (Optimized) ---
+# --- Card Creation Engine ---
 function New-ToolCard {
     [CmdletBinding()]
     param(
@@ -338,7 +331,6 @@ function New-ToolCard {
         [PSCustomObject]$Tool
     )
 
-    # Card Container
     $card = New-Object System.Windows.Forms.Panel
     $card.Size = New-Object System.Drawing.Size(320, 160)
     $card.BackColor = $script:theme.Card
@@ -347,7 +339,7 @@ function New-ToolCard {
     $card.Cursor = [System.Windows.Forms.Cursors]::Hand
     $card.Tag = $Tool
 
-    # Category Badge (Top Right)
+    # Category Badge
     $badge = New-Object System.Windows.Forms.Label
     $badge.Text = $Tool.Category
     $badge.Font = New-Object System.Drawing.Font("Segoe UI", 7.5, [System.Drawing.FontStyle]::Bold)
@@ -360,7 +352,7 @@ function New-ToolCard {
     $badge.TextAlign = [System.Drawing.ContentAlignment]::MiddleCenter
     $card.Controls.Add($badge)
 
-    # Icon + Title
+    # Title
     $tName = New-Object System.Windows.Forms.Label
     $tName.Text = "$($Tool.Icon) $($Tool.Name)"
     $tName.Font = New-Object System.Drawing.Font("Segoe UI", 11, [System.Drawing.FontStyle]::Bold)
@@ -380,7 +372,7 @@ function New-ToolCard {
     $tDesc.TextAlign = [System.Drawing.ContentAlignment]::TopLeft
     $card.Controls.Add($tDesc)
 
-    # URL Preview (truncated)
+    # URL Preview
     $tUrl = New-Object System.Windows.Forms.Label
     $urlDisplay = if ($Tool.Url.Length -gt 45) { $Tool.Url.Substring(0, 45) + "..." } else { $Tool.Url }
     $tUrl.Text = $urlDisplay
@@ -391,9 +383,9 @@ function New-ToolCard {
     $tUrl.TextAlign = [System.Drawing.ContentAlignment]::TopLeft
     $card.Controls.Add($tUrl)
 
-    # Action Button
+    # Run Button
     $btnRun = New-Object System.Windows.Forms.Button
-    $btnRun.Text = "▶ Run Tool"
+    $btnRun.Text = "Run Tool"
     $btnRun.Font = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Bold)
     $btnRun.ForeColor = [System.Drawing.Color]::White
     $btnRun.BackColor = $script:theme.Button
@@ -404,7 +396,6 @@ function New-ToolCard {
     $btnRun.Cursor = [System.Windows.Forms.Cursors]::Hand
     $btnRun.Tag = $Tool
 
-    # Button Hover Effects
     $btnRun.Add_MouseEnter({ $this.BackColor = $script:theme.ButtonHover })
     $btnRun.Add_MouseLeave({ $this.BackColor = $script:theme.Button })
 
@@ -415,7 +406,7 @@ function New-ToolCard {
 
     $card.Controls.Add($btnRun)
 
-    # Card Hover Effects
+    # Card Events
     $card.Add_MouseEnter({
         $this.BackColor = $script:theme.CardHover
         $script:statusLabel.Text = "Category: $($this.Tag.Category) | Double-click to run"
@@ -424,8 +415,6 @@ function New-ToolCard {
         $this.BackColor = $script:theme.Card
         $script:statusLabel.Text = "Hover over a tool to see details | Double-click card to run"
     })
-
-    # Double-click to run
     $card.Add_DoubleClick({
         Invoke-ToolExecution -Url $this.Tag.Url -Name $this.Tag.Name
     })
@@ -434,12 +423,9 @@ function New-ToolCard {
     $contextMenu = New-Object System.Windows.Forms.ContextMenuStrip
     $contextMenu.BackColor = $script:theme.Panel
     $contextMenu.ForeColor = $script:theme.Text
-    $contextMenu.Renderer = New-Object System.Windows.Forms.ToolStripProfessionalRenderer([System.Drawing.Color]::FromArgb(40, 42, 60))
 
     $menuRun = New-Object System.Windows.Forms.ToolStripMenuItem
     $menuRun.Text = "Run Tool"
-    $menuRun.BackColor = $script:theme.Panel
-    $menuRun.ForeColor = $script:theme.Text
     $menuRun.Add_Click({
         Invoke-ToolExecution -Url $Tool.Url -Name $Tool.Name
     })
@@ -447,8 +433,6 @@ function New-ToolCard {
 
     $menuCopy = New-Object System.Windows.Forms.ToolStripMenuItem
     $menuCopy.Text = "Copy URL"
-    $menuCopy.BackColor = $script:theme.Panel
-    $menuCopy.ForeColor = $script:theme.Text
     $menuCopy.Add_Click({
         [System.Windows.Forms.Clipboard]::SetText($Tool.Url)
         $script:statusLabel.Text = "URL copied to clipboard!"
@@ -457,8 +441,6 @@ function New-ToolCard {
 
     $menuOpen = New-Object System.Windows.Forms.ToolStripMenuItem
     $menuOpen.Text = "Open in Browser"
-    $menuOpen.BackColor = $script:theme.Panel
-    $menuOpen.ForeColor = $script:theme.Text
     $menuOpen.Add_Click({
         Start-Process $Tool.Url
     })
@@ -469,7 +451,7 @@ function New-ToolCard {
     return $card
 }
 
-# --- Render Engine (Performance Optimized) ---
+# --- Render Engine ---
 function Render-Tools {
     [CmdletBinding()]
     param(
@@ -509,7 +491,7 @@ function Render-Tools {
     $script:contentPanel.PerformLayout()
 }
 
-# --- Search Placeholder Handler ---
+# --- Search Placeholder ---
 $txtSearch.Add_GotFocus({
     if ($this.Text -eq "Search tools...") {
         $this.Text = ""
@@ -551,10 +533,9 @@ $mainForm.Add_KeyDown({
     }
 })
 
-# --- Form Resize Handler (Responsive Layout) ---
+# --- Form Resize ---
 $mainForm.Add_Resize({
     if ($script:contentPanel -and $script:contentPanel.Controls.Count -gt 0) {
-        # Adjust card sizes based on form width
         $availableWidth = $script:contentPanel.ClientSize.Width - 60
         $cardsPerRow = [math]::Max(1, [math]::Floor($availableWidth / 340))
         $cardWidth = [math]::Floor($availableWidth / $cardsPerRow) - 20
