@@ -50,7 +50,7 @@ $global:ToolsList = @(
             <StackPanel Margin="15">
                 <!-- Logo Header -->
                 <TextBlock Text="ValyaR" FontSize="26" FontWeight="Bold" Foreground="#8A2BE2" HorizontalAlignment="Center" Margin="0,10,0,2"/>
-                <TextBlock Text="COMMAND SUITE" FontSize="10" Foreground="#6C6C80" HorizontalAlignment="Center" LetterSpacing="3" Margin="0,0,0,30"/>
+                <TextBlock Text="COMMAND SUITE" FontSize="10" Foreground="#6C6C80" HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
                 <!-- Navigation Buttons -->
                 <Button Name="BtnOverview" Content=" Overview" Height="40" Background="#22222E" Foreground="#FFFFFF" BorderThickness="0" Margin="0,0,0,10" HorizontalContentAlignment="Left" Padding="15,0,0,0" FontSize="14" Cursor="Hand"/>
@@ -95,11 +95,8 @@ $global:ToolsList = @(
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Search & Filters -->
+                <!-- Search Bar -->
                 <Grid Grid.Row="0" Margin="0,0,0,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
                     <TextBox Name="TxtSearch" Height="40" Background="#16161D" Foreground="#FFFFFF" BorderBrush="#2A2A36" BorderThickness="1" Padding="12,8" FontSize="14" VerticalContentAlignment="Center" Text="Search tools or categories..."/>
                 </Grid>
 
@@ -123,7 +120,7 @@ $global:ToolsList = @(
                                             </StackPanel>
                                             <TextBlock Text="{Binding Desc}" Foreground="#808095" FontSize="13" TextWrapping="Wrap"/>
                                         </StackPanel>
-                                        <Button Grid.Column="1" Content="Run Tool" Tag="{Binding Cmd}" Height="35" Width="100" Background="#8A2BE2" Foreground="#FFFFFF" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand" Click="RunTool_Click"/>
+                                        <Button Grid.Column="1" Content="Run Tool" Tag="{Binding Cmd}" Height="35" Width="100" Background="#8A2BE2" Foreground="#FFFFFF" BorderThickness="0" FontWeight="SemiBold" Cursor="Hand"/>
                                     </Grid>
                                 </Border>
                             </DataTemplate>
@@ -186,14 +183,7 @@ $TxtSearch.Add_KeyUp({
     }
 })
 
-# تشغيل الأوامر عند الضغط على الزر
-$script:RunTool_Click = {
-    param($sender, $e)
-    $cmdToRun = $sender.Tag
-    Start-Process powershell -ArgumentList "-NoExit -Command $cmdToRun"
-}
-
-# إضافة الحدث للأزرار المنشأة ديناميكياً
+# معالجة الضغط على أزرار تشغيل الأدوات
 $Window.AddHandler([System.Windows.Controls.Primitives.ButtonBase]::ClickEvent, [System.Windows.RoutedEventHandler]{
     param($sender, $e)
     if ($e.Source.Tag -and $e.Source.Content -eq "Run Tool") {
