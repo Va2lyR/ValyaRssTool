@@ -1,7 +1,34 @@
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 
 # ---------------------------------------------------------
-# قائمة البيانات والأدوات (Data Structure)
+# 1. شاشة الأنيميشن والمقدمة العصريّة (ASCII Intro Animation)
+# ---------------------------------------------------------
+Clear-Host
+$host.UI.RawUI.ForegroundColor = "Magenta"
+
+$banner = @"
+__     __bdL  _        R  ____       
+\ \   / /_ _| |  _   _|  _ \ 
+ \ \ / / _` | | | | | | |_) |
+  \ V / (_| | | |_| | |  _ < 
+   \_/ \__,_|_|\__, |_|_| \_\
+               |___/         
+"@
+
+foreach ($line in $banner -split "`n") {
+    Write-Host $line -ForegroundColor Blue
+    Start-Sleep -Milliseconds 80
+}
+
+Write-Host "`n[+] INITIALIZING VALYAR COMMAND SUITE V2.0..." -ForegroundColor Cyan
+Start-Sleep -Milliseconds 400
+Write-Host "[+] LOADING MODULES & SECURITY TOOLS..." -ForegroundColor Yellow
+Start-Sleep -Milliseconds 400
+Write-Host "[+] LAUNCHING GUI INTERFACE..." -ForegroundColor Green
+Start-Sleep -Milliseconds 500
+
+# ---------------------------------------------------------
+# 2. قائمة البيانات والأدوات (Data Structure)
 # ---------------------------------------------------------
 $global:ToolsList = @(
     # Category: Mod Analyzers
@@ -31,7 +58,7 @@ $global:ToolsList = @(
 )
 
 # ---------------------------------------------------------
-# تصميم الواجهة باستخدام XAML (WPF)
+# 3. تصميم الواجهة الرسومية (Clean XAML)
 # ---------------------------------------------------------
 [xml]$XAML = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -135,12 +162,11 @@ $global:ToolsList = @(
 "@
 
 # ---------------------------------------------------------
-# تهيئة النافذة والمعالجة البرمجية
+# 4. معالجة الأحداث والتشغيل
 # ---------------------------------------------------------
 $reader = (New-Object System.Xml.XmlNodeReader $XAML)
 $Window = [Windows.Markup.XamlReader]::Load($reader)
 
-# ربط العناصر
 $BtnOverview  = $Window.FindName("BtnOverview")
 $BtnCmdSuite  = $Window.FindName("BtnCmdSuite")
 $ViewOverview = $Window.FindName("ViewOverview")
@@ -148,10 +174,8 @@ $ViewCmdSuite = $Window.FindName("ViewCmdSuite")
 $TxtSearch    = $Window.FindName("TxtSearch")
 $Container    = $Window.FindName("ToolsContainer")
 
-# ربط البيانات بالشاشة
 $Container.ItemsSource = $global:ToolsList
 
-# التنقل بين الأقسام
 $BtnOverview.Add_Click({
     $ViewOverview.Visibility = "Visible"
     $ViewCmdSuite.Visibility = "Collapsed"
@@ -166,7 +190,6 @@ $BtnCmdSuite.Add_Click({
     $BtnOverview.Background  = "#22222E"
 })
 
-# خاصية البحث والتصفية
 $TxtSearch.Add_GotFocus({
     if ($TxtSearch.Text -eq "Search tools or categories...") { $TxtSearch.Text = "" }
 })
@@ -183,7 +206,6 @@ $TxtSearch.Add_KeyUp({
     }
 })
 
-# معالجة الضغط على أزرار تشغيل الأدوات
 $Window.AddHandler([System.Windows.Controls.Primitives.ButtonBase]::ClickEvent, [System.Windows.RoutedEventHandler]{
     param($sender, $e)
     if ($e.Source.Tag -and $e.Source.Content -eq "Run Tool") {
@@ -191,5 +213,4 @@ $Window.AddHandler([System.Windows.Controls.Primitives.ButtonBase]::ClickEvent, 
     }
 })
 
-# عرض النافذة
 $Window.ShowDialog() | Out-Null
