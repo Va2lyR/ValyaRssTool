@@ -338,7 +338,8 @@ $launchBtn.Add_Click({
     $statusDot.BackColor = $colors.accent
     $statusLabel.Text = "🚀 Launching ValyaRssTool..."
     $statusLabel.ForeColor = $colors.accent
-    Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-c", "irm https://raw.githubusercontent.com/3ntrsquad/SSToolsHub/refs/heads/main/SSToolsHub.ps1 | iex"
+    $scriptPath = Join-Path $PSScriptRoot "SSToolsHub.ps1"
+    Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-File", $scriptPath
     $form.Close()
 })
 
@@ -348,7 +349,8 @@ $launchBtn.Add_Click({
 $form.Add_KeyDown({
     if ($_.KeyCode -eq "Escape") { $form.Close() }
     if ($_.KeyCode -eq "Enter") {
-        Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-c", "irm https://raw.githubusercontent.com/3ntrsquad/SSToolsHub/refs/heads/main/SSToolsHub.ps1 | iex"
+        $scriptPath = Join-Path $PSScriptRoot "SSToolsHub.ps1"
+        Start-Process powershell.exe -ArgumentList "-NoExit", "-ep", "bypass", "-File", $scriptPath
         $form.Close()
     }
 })
