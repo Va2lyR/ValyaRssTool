@@ -2,7 +2,7 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
 # ---------------------------------------------------------
-# 1. شاشة الترحيب في الـ CMD (ASCII Intro)
+# 1. شاشة الأنيميشن والمقدمة العصريّة (ASCII Intro)
 # ---------------------------------------------------------
 Clear-Host
 $host.UI.RawUI.ForegroundColor = "Magenta"
@@ -18,32 +18,32 @@ __     __bdL  _        R  ____
 
 foreach ($line in $banner -split "`n") {
     Write-Host $line -ForegroundColor Blue
-    Start-Sleep -Milliseconds 50
+    Start-Sleep -Milliseconds 40
 }
 
 Write-Host "`n[+] INITIALIZING VALYAR COMMAND SUITE V2.0..." -ForegroundColor Cyan
-Start-Sleep -Milliseconds 300
+Start-Sleep -Milliseconds 250
 Write-Host "[+] LOADING MODULES & SECURITY TOOLS..." -ForegroundColor Yellow
-Start-Sleep -Milliseconds 300
+Start-Sleep -Milliseconds 250
 Write-Host "[+] LAUNCHING GUI INTERFACE..." -ForegroundColor Green
 Start-Sleep -Milliseconds 300
 
 # ---------------------------------------------------------
-# 2. قائمة الأدوات
+# 2. قائمة البيانات والأدوات (Data Structure)
 # ---------------------------------------------------------
 $global:ToolsList = @(
-    # Mod Analyzers
+    # Category: Mod Analyzers
     @{ Name = "TeslaPro // Doomsday Detector"; Category = "Mod Analyzers"; Desc = "Launches Doomsday client detection workflow."; Cmd = "powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex (irm 'https://raw.githubusercontent.com/TeslaPros/DoomsdayDetector/main/DoomsdayClientDetectorV3.ps1')`"" },
     @{ Name = "Xkzutos // Mod Analyzer"; Category = "Mod Analyzers"; Desc = "Analyzes Minecraft mods using metadata and hashes."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/xkzuto96/xkzutos-mod-analyzer/main/XkzutosModAnalyzer.ps1')`"" },
     @{ Name = "TeslaPro // GhostClientFinder"; Category = "Mod Analyzers"; Desc = "Detects Ghost Client traces and modifications."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/TeslaPros/GhostClientFucker/refs/heads/main/GhostClientFucker.ps1')`"" },
     @{ Name = "Tonynoh // Meow Mod Analyzer"; Category = "Mod Analyzers"; Desc = "Analyzes Minecraft mods for suspicious indicators."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')`"" },
     @{ Name = "CheesyDqrkisFucker"; Category = "Mod Analyzers"; Desc = "Searches for Dqrkis-related traces."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1')`"" },
     
-    # Macro Detectors
+    # Category: Macro Detectors
     @{ Name = "Sellgui // Prime Macro Detector"; Category = "Macro Detectors"; Desc = "Detects Prime macro traces and activity."; Cmd = "powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1' -UseBasicParsing | iex`"" },
     @{ Name = "Nicc // Macro Detector"; Category = "Macro Detectors"; Desc = "Searches for macro-related traces."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1')`"" },
 
-    # Forensics
+    # Category: Forensics
     @{ Name = "Jar Parser"; Category = "Forensics"; Desc = "Analyzes .jar files for suspicious classes."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NoDiff-del/JARParser/refs/heads/main/JARParser.ps1')`"" },
     @{ Name = "Alt Detector"; Category = "Forensics"; Desc = "Searches for alternative accounts on system."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Enr1c0o/Powershell-Scripts/refs/heads/main/Alt-Detector.ps1')`"" },
     @{ Name = "Scheduled Tasks"; Category = "Forensics"; Desc = "Checks scheduled tasks for suspicious entries."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/nolww/project-mohr/refs/heads/main/SuspiciousScheduler.ps1')`"" },
@@ -52,14 +52,14 @@ $global:ToolsList = @(
     @{ Name = "Signatures Checker"; Category = "Forensics"; Desc = "Checks digital signatures of system files."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/refs/heads/main/signatures.ps1')`"" },
     @{ Name = "Prefetch Integrity"; Category = "Forensics"; Desc = "Analyzes Windows Prefetch files for anomalies."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/bacanoicua/Screenshare/main/RedLotusPrefetchIntegrityAnalyzer.ps1')`"" },
     
-    # Utilities
+    # Category: Utilities
     @{ Name = "TeslaPro // VPN Finder"; Category = "Utilities"; Desc = "Searches for active VPN connections."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"iex (irm 'https://raw.githubusercontent.com/TeslaPros/VPNChecker/main/VPNFinder.ps1')`"" },
     @{ Name = "AnyDesk Installer"; Category = "Utilities"; Desc = "Downloads and installs AnyDesk automatically."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/main/anydesk.ps1')`"" },
     @{ Name = "All In One Checker"; Category = "Utilities"; Desc = "Runs comprehensive screenshare checks."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Enr1c0o/Powershell-Scripts/refs/heads/main/All-in-one.ps1')`"" }
 )
 
 # ---------------------------------------------------------
-# 3. بناء الواجهة (WinForms GUI)
+# 3. بناء الواجهة الرسومية (Modern Dark WinForms GUI)
 # ---------------------------------------------------------
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "ValyaR Command Suite"
@@ -70,14 +70,14 @@ $form.ForeColor = [System.Drawing.Color]::White
 $form.FormBorderStyle = "FixedDialog"
 $form.MaximizeBox = $false
 
-# Sidebar
+# Sidebar Panel
 $sidebar = New-Object System.Windows.Forms.Panel
 $sidebar.Size = New-Object System.Drawing.Size(200, 600)
 $sidebar.Dock = "Left"
 $sidebar.BackColor = [System.Drawing.Color]::FromArgb(22, 22, 29)
 $form.Controls.Add($sidebar)
 
-# Logo
+# Logo Text
 $lblLogo = New-Object System.Windows.Forms.Label
 $lblLogo.Text = "ValyaR"
 $lblLogo.Font = New-Object System.Drawing.Font("Segoe UI", 20, [System.Drawing.FontStyle]::Bold)
@@ -94,7 +94,7 @@ $lblSub.Location = New-Object System.Drawing.Point(15, 55)
 $lblSub.AutoSize = $true
 $sidebar.Controls.Add($lblSub)
 
-# Nav Buttons
+# Sidebar Buttons
 $btnCmd = New-Object System.Windows.Forms.Button
 $btnCmd.Text = "ValyaR Cmd"
 $btnCmd.Location = New-Object System.Drawing.Point(10, 100)
@@ -104,6 +104,7 @@ $btnCmd.FlatAppearance.BorderSize = 0
 $btnCmd.BackColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
 $btnCmd.ForeColor = [System.Drawing.Color]::White
 $btnCmd.Font = New-Object System.Drawing.Font("Segoe UI", 10, [System.Drawing.FontStyle]::Bold)
+$btnCmd.Cursor = [System.Windows.Forms.Cursors]::Hand
 $sidebar.Controls.Add($btnCmd)
 
 $btnOverview = New-Object System.Windows.Forms.Button
@@ -115,6 +116,7 @@ $btnOverview.FlatAppearance.BorderSize = 0
 $btnOverview.BackColor = [System.Drawing.Color]::FromArgb(34, 34, 46)
 $btnOverview.ForeColor = [System.Drawing.Color]::White
 $btnOverview.Font = New-Object System.Drawing.Font("Segoe UI", 10)
+$btnOverview.Cursor = [System.Windows.Forms.Cursors]::Hand
 $sidebar.Controls.Add($btnOverview)
 
 # Main Container
@@ -198,6 +200,7 @@ function Populate-Tools ($list) {
         $btnRun.BackColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
         $btnRun.ForeColor = [System.Drawing.Color]::White
         $btnRun.Font = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Bold)
+        $btnRun.Cursor = [System.Windows.Forms.Cursors]::Hand
         $btnRun.Tag = $tool.Cmd
         
         $btnRun.Add_Click({
@@ -212,7 +215,7 @@ function Populate-Tools ($list) {
 
 Populate-Tools $global:ToolsList
 
-# Event Handling
+# Navigation Events
 $btnOverview.Add_Click({
     $pnlOverview.Visible = $true
     $pnlCmd.Visible = $false
@@ -227,6 +230,7 @@ $btnCmd.Add_Click({
     $btnOverview.BackColor = [System.Drawing.Color]::FromArgb(34, 34, 46)
 })
 
+# Real-time Filter Event
 $txtSearch.Add_TextChanged({
     $q = $txtSearch.Text.ToLower()
     if ([string]::IsNullOrWhiteSpace($q)) {
@@ -239,5 +243,5 @@ $txtSearch.Add_TextChanged({
     }
 })
 
-# Display Form
+# Show Window
 [void]$form.ShowDialog()
