@@ -111,8 +111,13 @@ $mainForm.Controls.Add($containerPanel)
 # --- Fixed Execution Handler ---
 function Launch-ToolScript ($url, $name) {
     try {
-        # Automatically trim whitespace/newlines from the URL
-        $cleanUrl = $url.Trim()
+        if ([string]::IsNullOrWhiteSpace($url)) {
+            [System.Windows.Forms.MessageBox]::Show("URL is missing for this tool.", "Warning", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
+            return
+        }
+
+        # Trim whitespace cleanly
+        $cleanUrl = $url.ToString().Trim()
 
         # Construct execution command with TLS 1.2 enforcement
         $cmd = "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Clear-Host; Write-Host 'Executing $name...' -ForegroundColor Cyan; Write-Host 'Source: $cleanUrl' -ForegroundColor Gray; Write-Host ''; irm '$cleanUrl' | iex"
@@ -170,9 +175,14 @@ function Render-Tools ($filterText = "") {
         $btnRun.Location = New-Object System.Drawing.Point(305, 82)
         $btnRun.Cursor = [System.Windows.Forms.Cursors]::Hand
         
-        $scriptUrl = $tool.Url
-        $toolTitle = $tool.Name
-        $btnRun.Add_Click({ Launch-ToolScript -url $scriptUrl -name $toolTitle })
+        # Store tool hash table directly in Tag property to avoid scope issues
+        $btnRun.Tag = $tool
+
+        # Attach Click Event using $this.Tag
+        $btnRun.Add_Click({
+            $selectedTool = $this.Tag
+            Launch-ToolScript -url $selectedTool.Url -name $selectedTool.Name
+        })
         
         $card.Controls.Add($btnRun)
         $containerPanel.Controls.Add($card)
