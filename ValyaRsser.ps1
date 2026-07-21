@@ -1,8 +1,7 @@
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 
 # ---------------------------------------------------------
-# 1. شاشة الأنيميشن والمقدمة العصريّة (ASCII Intro)
+# 1. مقدمة وأنيميشن ترحيبي في CMD
 # ---------------------------------------------------------
 Clear-Host
 $host.UI.RawUI.ForegroundColor = "Magenta"
@@ -18,230 +17,250 @@ __     __bdL  _        R  ____
 
 foreach ($line in $banner -split "`n") {
     Write-Host $line -ForegroundColor Blue
-    Start-Sleep -Milliseconds 40
+    Start-Sleep -Milliseconds 30
 }
 
-Write-Host "`n[+] INITIALIZING VALYAR COMMAND SUITE V2.0..." -ForegroundColor Cyan
-Start-Sleep -Milliseconds 250
-Write-Host "[+] LOADING MODULES & SECURITY TOOLS..." -ForegroundColor Yellow
-Start-Sleep -Milliseconds 250
-Write-Host "[+] LAUNCHING GUI INTERFACE..." -ForegroundColor Green
+Write-Host "`n[+] INITIALIZING VALYAR COMMAND SUITE..." -ForegroundColor Cyan
+Start-Sleep -Milliseconds 200
+Write-Host "[+] LAUNCHING MODERN GUI INTERFACE..." -ForegroundColor Green
 Start-Sleep -Milliseconds 300
 
 # ---------------------------------------------------------
-# 2. قائمة البيانات والأدوات (Data Structure)
+# 2. البيانات والأدوات
 # ---------------------------------------------------------
 $global:ToolsList = @(
     # Category: Mod Analyzers
-    @{ Name = "TeslaPro // Doomsday Detector"; Category = "Mod Analyzers"; Desc = "Launches Doomsday client detection workflow."; Cmd = "powershell -NoProfile -ExecutionPolicy Bypass -Command `"iex (irm 'https://raw.githubusercontent.com/TeslaPros/DoomsdayDetector/main/DoomsdayClientDetectorV3.ps1')`"" },
-    @{ Name = "Xkzutos // Mod Analyzer"; Category = "Mod Analyzers"; Desc = "Analyzes Minecraft mods using metadata and hashes."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/xkzuto96/xkzutos-mod-analyzer/main/XkzutosModAnalyzer.ps1')`"" },
-    @{ Name = "TeslaPro // GhostClientFinder"; Category = "Mod Analyzers"; Desc = "Detects Ghost Client traces and modifications."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/TeslaPros/GhostClientFucker/refs/heads/main/GhostClientFucker.ps1')`"" },
-    @{ Name = "Tonynoh // Meow Mod Analyzer"; Category = "Mod Analyzers"; Desc = "Analyzes Minecraft mods for suspicious indicators."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')`"" },
-    @{ Name = "CheesyDqrkisFucker"; Category = "Mod Analyzers"; Desc = "Searches for Dqrkis-related traces."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1')`"" },
+    @{ Name = "TeslaPro // Doomsday Detector"; Category = "Mod Analyzers"; Desc = "Launches Doomsday client detection workflow."; Script = "iex (irm 'https://raw.githubusercontent.com/TeslaPros/DoomsdayDetector/main/DoomsdayClientDetectorV3.ps1')" },
+    @{ Name = "Xkzutos // Mod Analyzer"; Category = "Mod Analyzers"; Desc = "Analyzes Minecraft mods using metadata and hashes."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/xkzuto96/xkzutos-mod-analyzer/main/XkzutosModAnalyzer.ps1')" },
+    @{ Name = "TeslaPro // GhostClientFinder"; Category = "Mod Analyzers"; Desc = "Detects Ghost Client traces and modifications."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/TeslaPros/GhostClientFucker/refs/heads/main/GhostClientFucker.ps1')" },
+    @{ Name = "Tonynoh // Meow Mod Analyzer"; Category = "Mod Analyzers"; Desc = "Analyzes Minecraft mods for suspicious indicators."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')" },
+    @{ Name = "CheesyDqrkisFucker"; Category = "Mod Analyzers"; Desc = "Searches for Dqrkis-related traces."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1')" },
     
     # Category: Macro Detectors
-    @{ Name = "Sellgui // Prime Macro Detector"; Category = "Macro Detectors"; Desc = "Detects Prime macro traces and activity."; Cmd = "powershell -ExecutionPolicy Bypass -NoProfile -Command `"iwr 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1' -UseBasicParsing | iex`"" },
-    @{ Name = "Nicc // Macro Detector"; Category = "Macro Detectors"; Desc = "Searches for macro-related traces."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1')`"" },
+    @{ Name = "Sellgui // Prime Macro Detector"; Category = "Macro Detectors"; Desc = "Detects Prime macro traces and activity."; Script = "iwr 'https://raw.githubusercontent.com/Sellgui/Javamacrodetector/refs/heads/main/Macro%20Detector.ps1' -UseBasicParsing | iex" },
+    @{ Name = "Nicc // Macro Detector"; Category = "Macro Detectors"; Desc = "Searches for macro-related traces."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1')" },
 
     # Category: Forensics
-    @{ Name = "Jar Parser"; Category = "Forensics"; Desc = "Analyzes .jar files for suspicious classes."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NoDiff-del/JARParser/refs/heads/main/JARParser.ps1')`"" },
-    @{ Name = "Alt Detector"; Category = "Forensics"; Desc = "Searches for alternative accounts on system."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Enr1c0o/Powershell-Scripts/refs/heads/main/Alt-Detector.ps1')`"" },
-    @{ Name = "Scheduled Tasks"; Category = "Forensics"; Desc = "Checks scheduled tasks for suspicious entries."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/nolww/project-mohr/refs/heads/main/SuspiciousScheduler.ps1')`"" },
-    @{ Name = "BAM Parser"; Category = "Forensics"; Desc = "Parses BAM data for executed applications."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/PureIntent/ScreenShare/main/RedLotusBam.ps1')`"" },
-    @{ Name = "Streams Finder"; Category = "Forensics"; Desc = "Searches for NTFS Alternate Data Streams."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/refs/heads/main/Streams.ps1')`"" },
-    @{ Name = "Signatures Checker"; Category = "Forensics"; Desc = "Checks digital signatures of system files."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/refs/heads/main/signatures.ps1')`"" },
-    @{ Name = "Prefetch Integrity"; Category = "Forensics"; Desc = "Analyzes Windows Prefetch files for anomalies."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/bacanoicua/Screenshare/main/RedLotusPrefetchIntegrityAnalyzer.ps1')`"" },
+    @{ Name = "Jar Parser"; Category = "Forensics"; Desc = "Analyzes .jar files for suspicious classes."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NoDiff-del/JARParser/refs/heads/main/JARParser.ps1')" },
+    @{ Name = "Alt Detector"; Category = "Forensics"; Desc = "Searches for alternative accounts on system."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Enr1c0o/Powershell-Scripts/refs/heads/main/Alt-Detector.ps1')" },
+    @{ Name = "Scheduled Tasks"; Category = "Forensics"; Desc = "Checks scheduled tasks for suspicious entries."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/nolww/project-mohr/refs/heads/main/SuspiciousScheduler.ps1')" },
+    @{ Name = "BAM Parser"; Category = "Forensics"; Desc = "Parses BAM data for executed applications."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/PureIntent/ScreenShare/main/RedLotusBam.ps1')" },
+    @{ Name = "Streams Finder"; Category = "Forensics"; Desc = "Searches for NTFS Alternate Data Streams."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/refs/heads/main/Streams.ps1')" },
+    @{ Name = "Signatures Checker"; Category = "Forensics"; Desc = "Checks digital signatures of system files."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/refs/heads/main/signatures.ps1')" },
+    @{ Name = "Prefetch Integrity"; Category = "Forensics"; Desc = "Analyzes Windows Prefetch files for anomalies."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/bacanoicua/Screenshare/main/RedLotusPrefetchIntegrityAnalyzer.ps1')" },
     
     # Category: Utilities
-    @{ Name = "TeslaPro // VPN Finder"; Category = "Utilities"; Desc = "Searches for active VPN connections."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"iex (irm 'https://raw.githubusercontent.com/TeslaPros/VPNChecker/main/VPNFinder.ps1')`"" },
-    @{ Name = "AnyDesk Installer"; Category = "Utilities"; Desc = "Downloads and installs AnyDesk automatically."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/main/anydesk.ps1')`"" },
-    @{ Name = "All In One Checker"; Category = "Utilities"; Desc = "Runs comprehensive screenshare checks."; Cmd = "powershell -ExecutionPolicy Bypass -Command `"Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Enr1c0o/Powershell-Scripts/refs/heads/main/All-in-one.ps1')`"" }
+    @{ Name = "TeslaPro // VPN Finder"; Category = "Utilities"; Desc = "Searches for active VPN connections."; Script = "iex (irm 'https://raw.githubusercontent.com/TeslaPros/VPNChecker/main/VPNFinder.ps1')" },
+    @{ Name = "AnyDesk Installer"; Category = "Utilities"; Desc = "Downloads and installs AnyDesk automatically."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/spokwn/powershells/main/anydesk.ps1')" },
+    @{ Name = "All In One Checker"; Category = "Utilities"; Desc = "Runs comprehensive screenshare checks."; Script = "Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/Enr1c0o/Powershell-Scripts/refs/heads/main/All-in-one.ps1')" }
 )
 
 # ---------------------------------------------------------
-# 3. بناء الواجهة الرسومية (Modern Dark WinForms GUI)
+# 3. تصميم واجهة WPF عصرية ونقية (Ultra-Modern Dark UI)
 # ---------------------------------------------------------
-$form = New-Object System.Windows.Forms.Form
-$form.Text = "ValyaR Command Suite"
-$form.Size = New-Object System.Drawing.Size(950, 600)
-$form.StartPosition = "CenterScreen"
-$form.BackColor = [System.Drawing.Color]::FromArgb(15, 15, 18)
-$form.ForeColor = [System.Drawing.Color]::White
-$form.FormBorderStyle = "FixedDialog"
-$form.MaximizeBox = $false
+$xamlString = @"
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="ValyaR Command Suite" Height="680" Width="1040"
+        WindowStartupLocation="CenterScreen" Background="#0B0C10"
+        Foreground="#FFFFFF" FontFamily="Segoe UI">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-# Sidebar Panel
-$sidebar = New-Object System.Windows.Forms.Panel
-$sidebar.Size = New-Object System.Drawing.Size(200, 600)
-$sidebar.Dock = "Left"
-$sidebar.BackColor = [System.Drawing.Color]::FromArgb(22, 22, 29)
-$form.Controls.Add($sidebar)
+        <!-- Sidebar Panel -->
+        <Border Grid.Column="0" Background="#12141D" BorderBrush="#1F2330" BorderThickness="0,0,1,0">
+            <Grid Margin="15,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-# Logo Text
-$lblLogo = New-Object System.Windows.Forms.Label
-$lblLogo.Text = "ValyaR"
-$lblLogo.Font = New-Object System.Drawing.Font("Segoe UI", 20, [System.Drawing.FontStyle]::Bold)
-$lblLogo.ForeColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
-$lblLogo.Location = New-Object System.Drawing.Point(10, 20)
-$lblLogo.AutoSize = $true
-$sidebar.Controls.Add($lblLogo)
+                <!-- Header -->
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="ValyaR" FontSize="28" FontWeight="Bold" Foreground="#9D4EDD" HorizontalAlignment="Center"/>
+                    <TextBlock Text="COMMAND SUITE" FontSize="11" Foreground="#5A6075" HorizontalAlignment="Center" Margin="0,3,0,30"/>
+                    
+                    <Button Name="BtnCmdSuite" Content="ValyaR Cmd" Height="42" Background="#9D4EDD" Foreground="#FFFFFF" BorderThickness="0" Margin="0,0,0,10" FontSize="14" FontWeight="SemiBold" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
 
-$lblSub = New-Object System.Windows.Forms.Label
-$lblSub.Text = "COMMAND SUITE"
-$lblSub.Font = New-Object System.Drawing.Font("Segoe UI", 8)
-$lblSub.ForeColor = [System.Drawing.Color]::FromArgb(108, 108, 128)
-$lblSub.Location = New-Object System.Drawing.Point(15, 55)
-$lblSub.AutoSize = $true
-$sidebar.Controls.Add($lblSub)
+                    <Button Name="BtnOverview" Content="Overview" Height="42" Background="#1A1D28" Foreground="#A0A5B5" BorderThickness="0" Margin="0,0,0,10" FontSize="14" FontWeight="SemiBold" Cursor="Hand">
+                        <Button.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="8"/>
+                            </Style>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
 
-# Sidebar Buttons
-$btnCmd = New-Object System.Windows.Forms.Button
-$btnCmd.Text = "ValyaR Cmd"
-$btnCmd.Location = New-Object System.Drawing.Point(10, 100)
-$btnCmd.Size = New-Object System.Drawing.Size(180, 40)
-$btnCmd.FlatStyle = "Flat"
-$btnCmd.FlatAppearance.BorderSize = 0
-$btnCmd.BackColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
-$btnCmd.ForeColor = [System.Drawing.Color]::White
-$btnCmd.Font = New-Object System.Drawing.Font("Segoe UI", 10, [System.Drawing.FontStyle]::Bold)
-$btnCmd.Cursor = [System.Windows.Forms.Cursors]::Hand
-$sidebar.Controls.Add($btnCmd)
+                <!-- Footer Info -->
+                <Border Grid.Row="2" Background="#1A1D28" CornerRadius="8" Padding="12" Margin="0,10,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Status: Online" Foreground="#00F5D4" FontSize="11" FontWeight="Bold"/>
+                        <TextBlock Text="Dev: Valyar" Foreground="#5A6075" FontSize="11" Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
 
-$btnOverview = New-Object System.Windows.Forms.Button
-$btnOverview.Text = "OverView"
-$btnOverview.Location = New-Object System.Drawing.Point(10, 150)
-$btnOverview.Size = New-Object System.Drawing.Size(180, 40)
-$btnOverview.FlatStyle = "Flat"
-$btnOverview.FlatAppearance.BorderSize = 0
-$btnOverview.BackColor = [System.Drawing.Color]::FromArgb(34, 34, 46)
-$btnOverview.ForeColor = [System.Drawing.Color]::White
-$btnOverview.Font = New-Object System.Drawing.Font("Segoe UI", 10)
-$btnOverview.Cursor = [System.Windows.Forms.Cursors]::Hand
-$sidebar.Controls.Add($btnOverview)
+        <!-- Content Area -->
+        <Grid Grid.Column="1" Margin="25">
+            
+            <!-- OVERVIEW SECTION -->
+            <Grid Name="ViewOverview" Visibility="Collapsed">
+                <Border Background="#12141D" CornerRadius="12" Padding="35" BorderBrush="#1F2330" BorderThickness="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="550">
+                    <StackPanel>
+                        <TextBlock Text="ValyaR Control Suite" FontSize="24" FontWeight="Bold" Foreground="#9D4EDD" Margin="0,0,0,10"/>
+                        <TextBlock Text="Advanced security diagnostic and forensic execution center designed for quick and seamless tool dispatching." TextWrapping="Wrap" Foreground="#8E95A5" FontSize="14" Margin="0,0,0,25"/>
+                        
+                        <Separator Background="#1F2330" Margin="0,0,0,20"/>
 
-# Main Container
-$mainPanel = New-Object System.Windows.Forms.Panel
-$mainPanel.Location = New-Object System.Drawing.Point(210, 10)
-$mainPanel.Size = New-Object System.Drawing.Size(710, 540)
-$form.Controls.Add($mainPanel)
+                        <Grid Margin="0,8">
+                            <TextBlock Text="Developer" Foreground="#5A6075" FontSize="14"/>
+                            <TextBlock Text="Valyar" Foreground="#FFFFFF" FontWeight="Bold" HorizontalAlignment="Right" FontSize="14"/>
+                        </Grid>
+                        <Grid Margin="0,8">
+                            <TextBlock Text="Discord Contact" Foreground="#5A6075" FontSize="14"/>
+                            <TextBlock Text="_iaec" Foreground="#00F5D4" FontWeight="Bold" HorizontalAlignment="Right" FontSize="14"/>
+                        </Grid>
+                        <Grid Margin="0,8">
+                            <TextBlock Text="System Framework" Foreground="#5A6075" FontSize="14"/>
+                            <TextBlock Text="WPF Core V2.5" Foreground="#FFFFFF" HorizontalAlignment="Right" FontSize="14"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
 
-# Overview View Panel
-$pnlOverview = New-Object System.Windows.Forms.Panel
-$pnlOverview.Size = New-Object System.Drawing.Size(710, 540)
-$pnlOverview.Visible = $false
-$mainPanel.Controls.Add($pnlOverview)
+            <!-- VALYAR CMD SECTION -->
+            <Grid Name="ViewCmdSuite" Visibility="Visible">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-$lblDevTitle = New-Object System.Windows.Forms.Label
-$lblDevTitle.Text = "ValyaR Control Center"
-$lblDevTitle.Font = New-Object System.Drawing.Font("Segoe UI", 18, [System.Drawing.FontStyle]::Bold)
-$lblDevTitle.ForeColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
-$lblDevTitle.Location = New-Object System.Drawing.Point(20, 20)
-$lblDevTitle.AutoSize = $true
-$pnlOverview.Controls.Add($lblDevTitle)
+                <!-- Search Bar -->
+                <Grid Grid.Row="0" Margin="0,0,0,20">
+                    <Border Background="#12141D" BorderBrush="#1F2330" BorderThickness="1" CornerRadius="8" Padding="5">
+                        <TextBox Name="TxtSearch" Height="32" Background="Transparent" Foreground="#FFFFFF" BorderThickness="0" Padding="10,5" FontSize="14" VerticalContentAlignment="Center" Text="Search tools or categories..."/>
+                    </Border>
+                </Grid>
 
-$lblInfo = New-Object System.Windows.Forms.Label
-$lblInfo.Text = "Developer: Valyar`nDiscord Dev: _iaec`nVersion: v2.0 GUI Edition"
-$lblInfo.Font = New-Object System.Drawing.Font("Segoe UI", 12)
-$lblInfo.Location = New-Object System.Drawing.Point(20, 80)
-$lblInfo.AutoSize = $true
-$pnlOverview.Controls.Add($lblInfo)
+                <!-- Scrollable Cards -->
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                    <ItemsControl Name="ToolsContainer">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#12141D" BorderBrush="#1F2330" BorderThickness="1" CornerRadius="10" Margin="0,0,0,12" Padding="16">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        
+                                        <StackPanel Grid.Column="0">
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,0,6">
+                                                <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="Bold" Foreground="#FFFFFF"/>
+                                                <Border Background="#1A1D28" CornerRadius="4" Margin="10,0,0,0" Padding="8,2">
+                                                    <TextBlock Text="{Binding Category}" FontSize="11" Foreground="#9D4EDD" FontWeight="Bold"/>
+                                                </Border>
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding Desc}" Foreground="#727A8C" FontSize="13" TextWrapping="Wrap"/>
+                                        </StackPanel>
 
-# Cmd View Panel
-$pnlCmd = New-Object System.Windows.Forms.Panel
-$pnlCmd.Size = New-Object System.Drawing.Size(710, 540)
-$mainPanel.Controls.Add($pnlCmd)
+                                        <Button Grid.Column="1" Content="Run Tool" Tag="{Binding Script}" Height="36" Width="95" Background="#9D4EDD" Foreground="#FFFFFF" BorderThickness="0" FontWeight="Bold" Cursor="Hand" Click="RunTool_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="6"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </Grid>
 
-# Search Box
-$txtSearch = New-Object System.Windows.Forms.TextBox
-$txtSearch.Location = New-Object System.Drawing.Point(10, 10)
-$txtSearch.Size = New-Object System.Drawing.Size(690, 30)
-$txtSearch.BackColor = [System.Drawing.Color]::FromArgb(22, 22, 29)
-$txtSearch.ForeColor = [System.Drawing.Color]::White
-$txtSearch.Font = New-Object System.Drawing.Font("Segoe UI", 11)
-$pnlCmd.Controls.Add($txtSearch)
+        </Grid>
+    </Grid>
+</Window>
+"@
 
-# Scrollable Tools Panel
-$flowPanel = New-Object System.Windows.Forms.FlowLayoutPanel
-$flowPanel.Location = New-Object System.Drawing.Point(10, 50)
-$flowPanel.Size = New-Object System.Drawing.Size(690, 480)
-$flowPanel.AutoScroll = $true
-$pnlCmd.Controls.Add($flowPanel)
+# ---------------------------------------------------------
+# 4. المعالجة البرمجية وحل مشكلة تشغيل الأوامر
+# ---------------------------------------------------------
+$reader = [System.Xml.XmlReader]::Create([System.IO.StringReader]::new($xamlString))
+$Window = [Windows.Markup.XamlReader]::Load($reader)
 
-# Function to render tools
-function Populate-Tools ($list) {
-    $flowPanel.Controls.Clear()
-    foreach ($tool in $list) {
-        $card = New-Object System.Windows.Forms.Panel
-        $card.Size = New-Object System.Drawing.Size(660, 65)
-        $card.BackColor = [System.Drawing.Color]::FromArgb(22, 22, 29)
-        $card.Margin = New-Object System.Windows.Forms.Padding(0, 0, 0, 10)
+$BtnOverview  = $Window.FindName("BtnOverview")
+$BtnCmdSuite  = $Window.FindName("BtnCmdSuite")
+$ViewOverview = $Window.FindName("ViewOverview")
+$ViewCmdSuite = $Window.FindName("ViewCmdSuite")
+$TxtSearch    = $Window.FindName("TxtSearch")
+$Container    = $Window.FindName("ToolsContainer")
 
-        $tName = New-Object System.Windows.Forms.Label
-        $tName.Text = $tool.Name
-        $tName.Font = New-Object System.Drawing.Font("Segoe UI", 11, [System.Drawing.FontStyle]::Bold)
-        $tName.Location = New-Object System.Drawing.Point(10, 8)
-        $tName.AutoSize = $true
-        $card.Controls.Add($tName)
+$Container.ItemsSource = $global:ToolsList
 
-        $tDesc = New-Object System.Windows.Forms.Label
-        $tDesc.Text = $tool.Desc
-        $tDesc.Font = New-Object System.Drawing.Font("Segoe UI", 9)
-        $tDesc.ForeColor = [System.Drawing.Color]::Gray
-        $tDesc.Location = New-Object System.Drawing.Point(10, 32)
-        $tDesc.AutoSize = $true
-        $card.Controls.Add($tDesc)
-
-        $btnRun = New-Object System.Windows.Forms.Button
-        $btnRun.Text = "Run"
-        $btnRun.Size = New-Object System.Drawing.Size(85, 35)
-        $btnRun.Location = New-Object System.Drawing.Point(560, 15)
-        $btnRun.FlatStyle = "Flat"
-        $btnRun.FlatAppearance.BorderSize = 0
-        $btnRun.BackColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
-        $btnRun.ForeColor = [System.Drawing.Color]::White
-        $btnRun.Font = New-Object System.Drawing.Font("Segoe UI", 9, [System.Drawing.FontStyle]::Bold)
-        $btnRun.Cursor = [System.Windows.Forms.Cursors]::Hand
-        $btnRun.Tag = $tool.Cmd
-        
-        $btnRun.Add_Click({
-            $cmd = $this.Tag
-            Start-Process powershell -ArgumentList "-NoExit -Command $cmd"
-        })
-
-        $card.Controls.Add($btnRun)
-        $flowPanel.Controls.Add($card)
-    }
-}
-
-Populate-Tools $global:ToolsList
-
-# Navigation Events
-$btnOverview.Add_Click({
-    $pnlOverview.Visible = $true
-    $pnlCmd.Visible = $false
-    $btnOverview.BackColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
-    $btnCmd.BackColor = [System.Drawing.Color]::FromArgb(34, 34, 46)
+# Navigation Handlers
+$BtnOverview.Add_Click({
+    $ViewOverview.Visibility = "Visible"
+    $ViewCmdSuite.Visibility = "Collapsed"
+    $BtnOverview.Background  = "#9D4EDD"
+    $BtnOverview.Foreground  = "#FFFFFF"
+    $BtnCmdSuite.Background  = "#1A1D28"
+    $BtnCmdSuite.Foreground  = "#A0A5B5"
 })
 
-$btnCmd.Add_Click({
-    $pnlOverview.Visible = $false
-    $pnlCmd.Visible = $true
-    $btnCmd.BackColor = [System.Drawing.Color]::FromArgb(138, 43, 226)
-    $btnOverview.BackColor = [System.Drawing.Color]::FromArgb(34, 34, 46)
+$BtnCmdSuite.Add_Click({
+    $ViewOverview.Visibility = "Collapsed"
+    $ViewCmdSuite.Visibility = "Visible"
+    $BtnCmdSuite.Background  = "#9D4EDD"
+    $BtnCmdSuite.Foreground  = "#FFFFFF"
+    $BtnOverview.Background  = "#1A1D28"
+    $BtnOverview.Foreground  = "#A0A5B5"
 })
 
-# Real-time Filter Event
-$txtSearch.Add_TextChanged({
-    $q = $txtSearch.Text.ToLower()
-    if ([string]::IsNullOrWhiteSpace($q)) {
-        Populate-Tools $global:ToolsList
+# Search Handler
+$TxtSearch.Add_GotFocus({
+    if ($TxtSearch.Text -eq "Search tools or categories...") { $TxtSearch.Text = "" }
+})
+
+$TxtSearch.Add_KeyUp({
+    $query = $TxtSearch.Text.ToLower()
+    if ([string]::IsNullOrWhiteSpace($query)) {
+        $Container.ItemsSource = $global:ToolsList
     } else {
         $filtered = $global:ToolsList | Where-Object { 
-            $_.Name.ToLower().Contains($q) -or $_.Category.ToLower().Contains($q) -or $_.Desc.ToLower().Contains($q)
+            $_.Name.ToLower().Contains($query) -or $_.Category.ToLower().Contains($query) -or $_.Desc.ToLower().Contains($query)
         }
-        Populate-Tools $filtered
+        $Container.ItemsSource = $filtered
     }
 })
 
-# Show Window
-[void]$form.ShowDialog()
+# الحل الجذري لمشكلة التشغيل (Execution Fix)
+$Window.AddHandler([System.Windows.Controls.Primitives.ButtonBase]::ClickEvent, [System.Windows.RoutedEventHandler]{
+    param($sender, $e)
+    if ($e.Source.Tag -and $e.Source.Content -eq "Run Tool") {
+        $scriptToRun = $e.Source.Tag
+        
+        # إنشاء ملف مؤقت آمن لتنفيذ السكريبت بدون مشاكل طول النصوص في الأوامر
+        $tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"
+        Set-Content -Path $tempFile -Value "Set-ExecutionPolicy Bypass -Scope Process -Force; $scriptToRun" -Encoding UTF8
+        
+        # تشغيل السكريبت في نافذة جديدة مباشرة
+        Start-Process powershell -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-File", "`"$tempFile`""
+    }
+})
+
+# Render GUI
+$Window.ShowDialog() | Out-Null
