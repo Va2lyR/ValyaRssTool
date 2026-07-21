@@ -1,6 +1,7 @@
 <#
     ===========================================================================
     Application Name : ValyaRssTool
+    File Name        : ValyaRsser.ps1
     Description      : Modern GUI Toolkit Launcher for Diagnostics & Forensic Tools
     Language         : English Interface
     ===========================================================================
@@ -107,35 +108,17 @@ $containerPanel.Padding = New-Object System.Windows.Forms.Padding(15)
 $containerPanel.BackColor = $colorBg
 $mainForm.Controls.Add($containerPanel)
 
-# --- Reliable Execution Handler ---
+# --- Fixed Execution Handler ---
 function Launch-ToolScript ($url, $name) {
     try {
-        # Construct the internal powershell script block
-        $scriptBlock = @"
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-Clear-Host
-Write-Host '==================================================' -ForegroundColor Cyan
-Write-Host ' Launching Tool: $name' -ForegroundColor Green
-Write-Host ' Source URL   : $url' -ForegroundColor DarkGray
-Write-Host '==================================================' -ForegroundColor Cyan
-Write-Host ''
-try {
-    irm '$url' | iex
-} catch {
-    Write-Host ''
-    Write-Host '[ERROR] Failed to execute target script:' $_ -ForegroundColor Red
-}
-Write-Host ''
-Write-Host 'Execution finished. Press Enter to return...' -ForegroundColor Yellow
-Read-Host
-"@
+        # Automatically trim whitespace/newlines from the URL
+        $cleanUrl = $url.Trim()
 
-        # Encode command to Base64 to prevent argument parsing issues
-        $bytes = [System.Text.Encoding]::Unicode.GetBytes($scriptBlock)
-        $encodedCmd = [Convert]::ToBase64String($bytes)
+        # Construct execution command with TLS 1.2 enforcement
+        $cmd = "[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; Clear-Host; Write-Host 'Executing $name...' -ForegroundColor Cyan; Write-Host 'Source: $cleanUrl' -ForegroundColor Gray; Write-Host ''; irm '$cleanUrl' | iex"
 
-        # Start process with persistent window
-        Start-Process powershell.exe -ArgumentList "-NoExit -ExecutionPolicy Bypass -EncodedCommand $encodedCmd"
+        # Launch in a persistent PowerShell window
+        Start-Process powershell.exe -ArgumentList "-NoExit", "-ExecutionPolicy", "Bypass", "-Command", $cmd
     } catch {
         [System.Windows.Forms.MessageBox]::Show("Failed to launch tool: $_", "Error", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Error)
     }
