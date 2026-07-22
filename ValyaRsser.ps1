@@ -1,267 +1,152 @@
-# ==========================================
-#  ValyarSS Control Center - Main Launcher
-#  Repo: Va2lyR/ValyaRssTool
-# ==========================================
+<#
+.SYNOPSIS
+    ValyaRsser - Launcher GUI لأدوات ValyaRssTool
+.DESCRIPTION
+    يفتح واجهة رسومية (WinForms) فيها زر لكل سكربت PowerShell موجود
+    داخل مجلد tools، وعند الضغط على الزر يشغّل السكربت المطابق
+    في نافذة PowerShell جديدة.
+.NOTES
+    شغّل هذا الملف بصلاحيات مناسبة حسب الأداة (بعض الأدوات، متل قراءة
+    BAM من الـ Registry، تحتاج صلاحيات Administrator).
+#>
 
-Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
 
-# قائمة الأدوات مع تحويلها لـ PSCustomObject لضمان عمل الفرز والأقسام
-$script:ToolsCatalog = @(
-    # Detectors
-    [PSCustomObject]@{ Name = "Doomsday Detector V3";  File = "DoomsdayClientDetectorV3.ps1"; Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DoomsdayClientDetectorV3.ps1" },
-    [PSCustomObject]@{ Name = "Doomsday Finder";        File = "DoomsDayDetector.ps1";          Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DoomsDayDetector.ps1" },
-    [PSCustomObject]@{ Name = "Ghost Client Finder";    File = "GhostClientFucker.ps1";         Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/GhostClientFucker.ps1" },
-    [PSCustomObject]@{ Name = "Dqrkis Detector";        File = "DqrkisFucker.ps1";              Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DqrkisFucker.ps1" },
-    [PSCustomObject]@{ Name = "Alt Detector";           File = "Alt-Detector.ps1";              Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Alt-Detector.ps1" },
+# ---------- إعدادات عامة ----------
+$RootDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ToolsDir = Join-Path $RootDir "tools"
 
-    # Analyzers
-    [PSCustomObject]@{ Name = "Mod Analyzer (Xkzutos)"; File = "XkzutosModAnalyzer.ps1";        Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/XkzutosModAnalyzer.ps1" },
-    [PSCustomObject]@{ Name = "Meow Mod Analyzer";      File = "MeowModAnalyzer.ps1";           Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/MeowModAnalyzer.ps1" },
-    [PSCustomObject]@{ Name = "JAR Parser";             File = "JARParser.ps1";                 Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/JARParser.ps1" },
-    [PSCustomObject]@{ Name = "Prefetch Integrity";     File = "RedLotusPrefetchIntegrityAnalyzer.ps1"; Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusPrefetchIntegrityAnalyzer.ps1" },
-    [PSCustomObject]@{ Name = "BAM Parser (RedLotus)";  File = "RedLotusBam.ps1";               Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusBam.ps1" },
-    [PSCustomObject]@{ Name = "Spokwn BAM Parser";      File = "bamparser.ps1";                 Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/bamparser.ps1" },
-    [PSCustomObject]@{ Name = "BAM Deleted Keys";      File = "bam.ps1";                       Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/bam.ps1" },
-
-    # Macros
-    [PSCustomObject]@{ Name = "Prime Macro Detector";   File = "Macro Detector.ps1";            Category = "MACROS";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Macro%20Detector.ps1" },
-    [PSCustomObject]@{ Name = "Nicc Macro Detector";    File = "MacroDetector.ps1";             Category = "MACROS";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/MacroDetector.ps1" },
-
-    # System & Utilities
-    [PSCustomObject]@{ Name = "VPN Finder";             File = "VPNFinder.ps1";                 Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/VPNFinder.ps1" },
-    [PSCustomObject]@{ Name = "Scheduled Tasks";        File = "SuspiciousScheduler.ps1";       Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/SuspiciousScheduler.ps1" },
-    [PSCustomObject]@{ Name = "Signed Scheduled Tasks"; File = "Signed-Scheduled-Tasks.ps1";    Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Signed-Scheduled-Tasks.ps1" },
-    [PSCustomObject]@{ Name = "NTFS Streams";           File = "Streams.ps1";                   Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Streams.ps1" },
-    [PSCustomObject]@{ Name = "Digital Signatures";     File = "signatures.ps1";                Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/signatures.ps1" },
-    [PSCustomObject]@{ Name = "Hard Disk Converter";    File = "RedLotusHardDiskVolumeConverter.ps1"; Category = "SYSTEM"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusHardDiskVolumeConverter.ps1" },
-    [PSCustomObject]@{ Name = "Windows Services";       File = "Services.ps1";                  Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Services.ps1" },
-
-    # Bundles
-    [PSCustomObject]@{ Name = "All In One Checker";     File = "All-in-one.ps1";                Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/All-in-one.ps1" },
-    [PSCustomObject]@{ Name = "Mini SS Check";          File = "miniss.ps1";                    Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/miniss.ps1" },
-    [PSCustomObject]@{ Name = "SSToolsHub";             File = "SSToolsHub.ps1";                Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/SSToolsHub.ps1" },
-    [PSCustomObject]@{ Name = "Spokwn Tool Collector";  File = "Spokwn-Collect.ps1";            Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Spokwn-Collect.ps1" },
-    [PSCustomObject]@{ Name = "Collector (AV Exclusion)"; File = "Collector.ps1";              Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Collector.ps1" },
-    [PSCustomObject]@{ Name = "AnyDesk Installer";      File = "anydesk.ps1";                   Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/anydesk.ps1" }
-)
-
-[xml]$xaml = @"
-<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="ValyarSS Control Center" Height="680" Width="1050"
-        WindowStartupLocation="CenterScreen" Background="#090D16"
-        ResizeMode="CanMinimize">
-    
-    <Grid Margin="15">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="310"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Sidebar -->
-        <Border Grid.Column="0" Background="#111827" CornerRadius="12" Padding="12" Margin="0,0,10,0">
-            <DockPanel>
-                <StackPanel DockPanel.Dock="Top" Margin="0,0,0,15">
-                    <TextBlock Text="ValyarSS" Foreground="#38BDF8" FontSize="26" FontWeight="Bold"/>
-                    <TextBlock Text="Advanced SS Forensic Suite" Foreground="#64748B" FontSize="11" Margin="2,0,0,0"/>
-                </StackPanel>
-
-                <Border DockPanel.Dock="Bottom" Background="#1E293B" CornerRadius="8" Padding="10" Margin="0,10,0,0">
-                    <Grid>
-                        <StackPanel>
-                            <TextBlock Text="Control Center" Foreground="#94A3B8" FontSize="10"/>
-                            <TextBlock Text="Version 3.0" Foreground="#38BDF8" FontSize="13" FontWeight="Bold"/>
-                        </StackPanel>
-                        <TextBlock Text="ONLINE" Foreground="#10B981" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-
-                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-                    <StackPanel Name="ToolButtonsStack"/>
-                </ScrollViewer>
-            </DockPanel>
-        </Border>
-
-        <!-- Main Content -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0" Margin="0,0,0,10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Border Grid.Column="0" Background="#111827" CornerRadius="10" Padding="12" Margin="0,0,5,0">
-                    <StackPanel>
-                        <TextBlock Text="Panel Status" Foreground="#64748B" FontSize="11" FontWeight="SemiBold"/>
-                        <TextBlock Name="TxtStatus" Text="READY" Foreground="#10B981" FontSize="20" FontWeight="Bold" Margin="0,4,0,0"/>
-                        <TextBlock Text="Ready for execution" Foreground="#475569" FontSize="10" Margin="0,2,0,0"/>
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Column="1" Background="#111827" CornerRadius="10" Padding="12" Margin="5,0,5,0">
-                    <StackPanel>
-                        <TextBlock Text="Current Task" Foreground="#64748B" FontSize="11" FontWeight="SemiBold"/>
-                        <TextBlock Name="TxtCurrentTask" Text="Idle" Foreground="#38BDF8" FontSize="16" FontWeight="Bold" Margin="0,4,0,0" TextTrimming="CharacterEllipsis"/>
-                        <ProgressBar Name="ProgressBar" Height="4" Margin="0,8,0,0" Foreground="#0EA5E9" Background="#1E293B" BorderThickness="0" Value="0"/>
-                    </StackPanel>
-                </Border>
-
-                <Border Grid.Column="2" Background="#111827" CornerRadius="10" Padding="12" Margin="5,0,0,0">
-                    <StackPanel>
-                        <TextBlock Text="Available Tools" Foreground="#64748B" FontSize="11" FontWeight="SemiBold"/>
-                        <TextBlock Name="TxtToolCount" Text="0 Registered" Foreground="#F59E0B" FontSize="18" FontWeight="Bold" Margin="0,4,0,0"/>
-                        <TextBlock Text="GitHub Sync Enabled" Foreground="#475569" FontSize="10" Margin="0,2,0,0"/>
-                    </StackPanel>
-                </Border>
-            </Grid>
-
-            <Border Grid.Row="1" Background="#050811" CornerRadius="10" Padding="12" BorderBrush="#1E293B" BorderThickness="1">
-                <DockPanel>
-                    <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
-                        <TextBlock Text="Activity Console Output" Foreground="#64748B" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
-                        <Button Name="BtnClearConsole" Content="Clear Output" Foreground="#94A3B8" Background="#1E293B" Padding="8,3" BorderThickness="0" HorizontalAlignment="Right" FontSize="10"/>
-                    </Grid>
-                    
-                    <TextBox Name="TxtConsole" Background="Transparent" Foreground="#00FF66" 
-                             FontFamily="Consolas" FontSize="12" BorderThickness="0" 
-                             IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                             AcceptsReturn="True"/>
-                </DockPanel>
-            </Border>
-        </Grid>
-    </Grid>
-</Window>
-"@
-
-# Read Window
-$reader = (New-Object System.Xml.XmlNodeReader $xaml)
-$window = [Windows.Markup.XamlReader]::Load($reader)
-
-# Get Controls
-$txtConsole     = $window.FindName("TxtConsole")
-$txtStatus      = $window.FindName("TxtStatus")
-$txtCurrentTask = $window.FindName("TxtCurrentTask")
-$progressBar    = $window.FindName("ProgressBar")
-$btnClear       = $window.FindName("BtnClearConsole")
-$toolsStack     = $window.FindName("ToolButtonsStack")
-$txtToolCount   = $window.FindName("TxtToolCount")
-
-function Log-Activity {
-    param ([string]$message, [string]$type = "INFO")
-    $timestamp = Get-Date -Format "HH:mm:ss"
-    if ($txtConsole) {
-        $txtConsole.AppendText("[$timestamp] [$type] $message`n")
-        $txtConsole.ScrollToEnd()
-    }
+if (-not (Test-Path $ToolsDir)) {
+    [System.Windows.Forms.MessageBox]::Show(
+        "مجلد tools غير موجود بجانب ValyaRsser.ps1`n($ToolsDir)",
+        "ValyaRssTool - خطأ",
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Error
+    ) | Out-Null
+    exit 1
 }
 
-# تحديد المجلد المحلي لحفظ الأدوات فيه بشكل آمن حتى لو تم تشغيل الكود عبر الذاكرة
-$baseDir = if ($PSScriptRoot) { $PSScriptRoot } else { [System.IO.Path]::Combine($env:TEMP, "ValyarSS") }
-$toolsFolder = Join-Path -Path $baseDir -ChildPath "tools"
-
-if (-not (Test-Path -Path $toolsFolder)) {
-    New-Item -ItemType Directory -Path $toolsFolder -Force | Out-Null
+# خريطة أسماء الزر المعروضة -> اسم الملف (اختياري، لو حبيت تسمية أجمل من اسم الملف)
+$DisplayNameMap = @{
+    "DoomsdayClientDetectorV3.ps1" = "Doomsday Client Detector"
+    "VPNFinder.ps1"                = "VPN Finder"
+    "BAMParser.ps1"                = "BAM Parser"
 }
 
-$txtToolCount.Text = "$($script:ToolsCatalog.Count) Registered"
+# ---------- دالة تشغيل سكربت في نافذة PowerShell جديدة ----------
+function Start-Tool {
+    param([string]$ScriptPath)
 
-# Populate Sidebar
-$categories = $script:ToolsCatalog | Select-Object -ExpandProperty Category -Unique
-
-foreach ($cat in $categories) {
-    $header = New-Object System.Windows.Controls.TextBlock
-    $header.Text = "— $cat —"
-    $header.Foreground = [System.Windows.Media.Brushes]::HexColorConverter().ConvertFromString("#475569")
-    $header.FontSize = 10
-    $header.FontWeight = [System.Windows.FontWeights]::Bold
-    $header.Margin = "5,10,5,5"
-    $toolsStack.Children.Add($header) | Out-Null
-
-    $catTools = $script:ToolsCatalog | Where-Object { $_.Category -eq $cat }
-    foreach ($tool in $catTools) {
-        $btn = New-Object System.Windows.Controls.Button
-        $btn.Content = "▶  $($tool.Name)"
-        $btn.Height = 38
-        $btn.Margin = "0,0,0,6"
-        $btn.Background = [System.Windows.Media.Brushes]::HexColorConverter().ConvertFromString("#1E293B")
-        $btn.Foreground = [System.Windows.Media.Brushes]::HexColorConverter().ConvertFromString("#E2E8F0")
-        $btn.BorderThickness = 0
-        $btn.Padding = "10,0,0,0"
-        $btn.HorizontalContentAlignment = [System.Windows.HorizontalAlignment]::Left
-        $btn.FontWeight = [System.Windows.FontWeights]::SemiBold
-        $btn.Tag = $tool
-
-        $btn.Add_Click({
-            $toolInfo = $this.Tag
-            Invoke-ToolScript -ToolInfo $toolInfo
-        })
-
-        $toolsStack.Children.Add($btn) | Out-Null
+    if (-not (Test-Path $ScriptPath)) {
+        [System.Windows.Forms.MessageBox]::Show(
+            "الملف غير موجود:`n$ScriptPath",
+            "ValyaRssTool - خطأ",
+            [System.Windows.Forms.MessageBoxButtons]::OK,
+            [System.Windows.Forms.MessageBoxIcon]::Error
+        ) | Out-Null
+        return
     }
+
+    # -NoExit يخلي نافذة الـ PowerShell مفتوحة بعد ما تخلص الأداة عشان تشوف النتيجة
+    Start-Process powershell.exe -ArgumentList @(
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-NoExit",
+        "-File", "`"$ScriptPath`""
+    )
 }
 
-function Invoke-ToolScript {
-    param ($ToolInfo)
+# ---------- بناء الواجهة ----------
+$Form                 = New-Object System.Windows.Forms.Form
+$Form.Text            = "ValyaRssTool"
+$Form.Size            = New-Object System.Drawing.Size(420, 520)
+$Form.StartPosition   = "CenterScreen"
+$Form.FormBorderStyle = "FixedSingle"
+$Form.MaximizeBox     = $false
+$Form.BackColor       = [System.Drawing.Color]::FromArgb(24, 24, 28)
 
-    $fileName = $ToolInfo.File
-    $toolName = $ToolInfo.Name
-    $rawUrl   = $ToolInfo.Link
-    $scriptPath = Join-Path -Path $toolsFolder -ChildPath $fileName
+$TitleLabel           = New-Object System.Windows.Forms.Label
+$TitleLabel.Text      = "ValyaRssTool"
+$TitleLabel.Font      = New-Object System.Drawing.Font("Segoe UI", 18, [System.Drawing.FontStyle]::Bold)
+$TitleLabel.ForeColor = [System.Drawing.Color]::FromArgb(0, 200, 255)
+$TitleLabel.AutoSize  = $false
+$TitleLabel.TextAlign = "MiddleCenter"
+$TitleLabel.Size      = New-Object System.Drawing.Size(400, 50)
+$TitleLabel.Location  = New-Object System.Drawing.Point(10, 10)
+$Form.Controls.Add($TitleLabel)
 
-    $txtStatus.Text = "BUSY"
-    $txtStatus.Foreground = [System.Windows.Media.Brushes]::Orange
-    $txtCurrentTask.Text = $toolName
-    $progressBar.Value = 25
+$SubLabel             = New-Object System.Windows.Forms.Label
+$SubLabel.Text        = "اختر الأداة اللي بدك تشغّلها"
+$SubLabel.Font        = New-Object System.Drawing.Font("Segoe UI", 10)
+$SubLabel.ForeColor   = [System.Drawing.Color]::LightGray
+$SubLabel.AutoSize    = $false
+$SubLabel.TextAlign   = "MiddleCenter"
+$SubLabel.Size        = New-Object System.Drawing.Size(400, 25)
+$SubLabel.Location    = New-Object System.Drawing.Point(10, 60)
+$Form.Controls.Add($SubLabel)
 
-    if (-not (Test-Path -Path $scriptPath)) {
-        Log-Activity "Downloading '$toolName' from GitHub..." "NET"
-        try {
-            Invoke-RestMethod -Uri $rawUrl -OutFile $scriptPath
-            Log-Activity "Successfully downloaded $fileName." "OK"
-        }
-        catch {
-            Log-Activity "Failed to download $fileName : $_" "ERROR"
-            $txtStatus.Text = "READY"
-            $txtStatus.Foreground = [System.Windows.Media.Brushes]::HexColorConverter().ConvertFromString("#10B981")
-            $txtCurrentTask.Text = "Idle"
-            $progressBar.Value = 0
-            return
-        }
+# Panel قابل للتمرير يحتوي أزرار الأدوات
+$Panel            = New-Object System.Windows.Forms.Panel
+$Panel.Location   = New-Object System.Drawing.Point(10, 95)
+$Panel.Size       = New-Object System.Drawing.Size(384, 350)
+$Panel.AutoScroll = $true
+$Form.Controls.Add($Panel)
+
+# اجلب كل سكربتات .ps1 داخل tools
+$ScriptFiles = Get-ChildItem -Path $ToolsDir -Filter "*.ps1" | Sort-Object Name
+
+$y = 0
+foreach ($file in $ScriptFiles) {
+
+    $displayName = if ($DisplayNameMap.ContainsKey($file.Name)) {
+        $DisplayNameMap[$file.Name]
+    } else {
+        [System.IO.Path]::GetFileNameWithoutExtension($file.Name)
     }
 
-    $progressBar.Value = 60
-    Log-Activity "Executing: $toolName..." "RUN"
+    $btn              = New-Object System.Windows.Forms.Button
+    $btn.Text         = $displayName
+    $btn.Size         = New-Object System.Drawing.Size(360, 45)
+    $btn.Location     = New-Object System.Drawing.Point(5, $y)
+    $btn.Font         = New-Object System.Drawing.Font("Segoe UI", 11)
+    $btn.BackColor    = [System.Drawing.Color]::FromArgb(40, 40, 48)
+    $btn.ForeColor    = [System.Drawing.Color]::White
+    $btn.FlatStyle    = "Flat"
+    $btn.FlatAppearance.BorderColor = [System.Drawing.Color]::FromArgb(0, 200, 255)
+    $btn.Tag          = $file.FullName
 
-    try {
-        $output = & $scriptPath 2>&1
-        foreach ($line in $output) {
-            Log-Activity "$line" "OUT"
-        }
-        Log-Activity "Finished executing '$toolName'." "SUCCESS"
-    }
-    catch {
-        Log-Activity "Execution error on $toolName : $_" "EXCEPT"
-    }
-    finally {
-        $txtStatus.Text = "READY"
-        $txtStatus.Foreground = [System.Windows.Media.Brushes]::HexColorConverter().ConvertFromString("#10B981")
-        $txtCurrentTask.Text = "Idle"
-        $progressBar.Value = 100
-    }
+    $btn.Add_Click({
+        param($sender, $e)
+        Start-Tool -ScriptPath $sender.Tag
+    })
+
+    $Panel.Controls.Add($btn)
+    $y += 55
 }
 
-$btnClear.Add_Click({
-    $txtConsole.Clear()
-    Log-Activity "Console output cleared." "SYS"
+if ($ScriptFiles.Count -eq 0) {
+    $emptyLabel           = New-Object System.Windows.Forms.Label
+    $emptyLabel.Text      = "ما في أي أداة داخل مجلد tools حالياً."
+    $emptyLabel.ForeColor = [System.Drawing.Color]::Gray
+    $emptyLabel.AutoSize  = $true
+    $emptyLabel.Location  = New-Object System.Drawing.Point(5, 10)
+    $Panel.Controls.Add($emptyLabel)
+}
+
+# زر تحديث القائمة (لو ضفت أداة جديدة بدون ما تعيد فتح البرنامج)
+$RefreshBtn           = New-Object System.Windows.Forms.Button
+$RefreshBtn.Text      = "تحديث القائمة"
+$RefreshBtn.Size      = New-Object System.Drawing.Size(384, 35)
+$RefreshBtn.Location  = New-Object System.Drawing.Point(10, 455)
+$RefreshBtn.Font      = New-Object System.Drawing.Font("Segoe UI", 10)
+$RefreshBtn.BackColor = [System.Drawing.Color]::FromArgb(0, 120, 160)
+$RefreshBtn.ForeColor = [System.Drawing.Color]::White
+$RefreshBtn.FlatStyle = "Flat"
+$RefreshBtn.Add_Click({
+    $Form.Close()
+    & $MyInvocation.MyCommand.Path
 })
+$Form.Controls.Add($RefreshBtn)
 
-Log-Activity "ValyarSS Control Center Started." "SYS"
-Log-Activity "Loaded $($script:ToolsCatalog.Count) forensic tools dynamically." "SYS"
-
-$window.ShowDialog() | Out-Null
+[void]$Form.ShowDialog()
