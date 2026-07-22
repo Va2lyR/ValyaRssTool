@@ -5,44 +5,44 @@
 
 Add-Type -AssemblyName PresentationFramework, PresentationCore, WindowsBase
 
-# قائمة الأدوات المربوطة بمستودع GitHub الخاص بك
+# قائمة الأدوات مع تحويلها لـ PSCustomObject لضمان عمل الفرز والأقسام
 $script:ToolsCatalog = @(
     # Detectors
-    @{ Name = "Doomsday Detector V3";  File = "DoomsdayClientDetectorV3.ps1"; Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DoomsdayClientDetectorV3.ps1" },
-    @{ Name = "Doomsday Finder";        File = "DoomsDayDetector.ps1";          Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DoomsDayDetector.ps1" },
-    @{ Name = "Ghost Client Finder";    File = "GhostClientFucker.ps1";         Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/GhostClientFucker.ps1" },
-    @{ Name = "Dqrkis Detector";        File = "DqrkisFucker.ps1";              Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DqrkisFucker.ps1" },
-    @{ Name = "Alt Detector";           File = "Alt-Detector.ps1";              Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Alt-Detector.ps1" },
+    [PSCustomObject]@{ Name = "Doomsday Detector V3";  File = "DoomsdayClientDetectorV3.ps1"; Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DoomsdayClientDetectorV3.ps1" },
+    [PSCustomObject]@{ Name = "Doomsday Finder";        File = "DoomsDayDetector.ps1";          Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DoomsDayDetector.ps1" },
+    [PSCustomObject]@{ Name = "Ghost Client Finder";    File = "GhostClientFucker.ps1";         Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/GhostClientFucker.ps1" },
+    [PSCustomObject]@{ Name = "Dqrkis Detector";        File = "DqrkisFucker.ps1";              Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/DqrkisFucker.ps1" },
+    [PSCustomObject]@{ Name = "Alt Detector";           File = "Alt-Detector.ps1";              Category = "DETECTORS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Alt-Detector.ps1" },
 
     # Analyzers
-    @{ Name = "Mod Analyzer (Xkzutos)"; File = "XkzutosModAnalyzer.ps1";        Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/XkzutosModAnalyzer.ps1" },
-    @{ Name = "Meow Mod Analyzer";      File = "MeowModAnalyzer.ps1";           Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/MeowModAnalyzer.ps1" },
-    @{ Name = "JAR Parser";             File = "JARParser.ps1";                 Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/JARParser.ps1" },
-    @{ Name = "Prefetch Integrity";     File = "RedLotusPrefetchIntegrityAnalyzer.ps1"; Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusPrefetchIntegrityAnalyzer.ps1" },
-    @{ Name = "BAM Parser (RedLotus)";  File = "RedLotusBam.ps1";               Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusBam.ps1" },
-    @{ Name = "Spokwn BAM Parser";      File = "bamparser.ps1";                 Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/bamparser.ps1" },
-    @{ Name = "BAM Deleted Keys";      File = "bam.ps1";                       Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/bam.ps1" },
+    [PSCustomObject]@{ Name = "Mod Analyzer (Xkzutos)"; File = "XkzutosModAnalyzer.ps1";        Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/XkzutosModAnalyzer.ps1" },
+    [PSCustomObject]@{ Name = "Meow Mod Analyzer";      File = "MeowModAnalyzer.ps1";           Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/MeowModAnalyzer.ps1" },
+    [PSCustomObject]@{ Name = "JAR Parser";             File = "JARParser.ps1";                 Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/JARParser.ps1" },
+    [PSCustomObject]@{ Name = "Prefetch Integrity";     File = "RedLotusPrefetchIntegrityAnalyzer.ps1"; Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusPrefetchIntegrityAnalyzer.ps1" },
+    [PSCustomObject]@{ Name = "BAM Parser (RedLotus)";  File = "RedLotusBam.ps1";               Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusBam.ps1" },
+    [PSCustomObject]@{ Name = "Spokwn BAM Parser";      File = "bamparser.ps1";                 Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/bamparser.ps1" },
+    [PSCustomObject]@{ Name = "BAM Deleted Keys";      File = "bam.ps1";                       Category = "ANALYZERS"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/bam.ps1" },
 
     # Macros
-    @{ Name = "Prime Macro Detector";   File = "Macro Detector.ps1";            Category = "MACROS";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Macro%20Detector.ps1" },
-    @{ Name = "Nicc Macro Detector";    File = "MacroDetector.ps1";             Category = "MACROS";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/MacroDetector.ps1" },
+    [PSCustomObject]@{ Name = "Prime Macro Detector";   File = "Macro Detector.ps1";            Category = "MACROS";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Macro%20Detector.ps1" },
+    [PSCustomObject]@{ Name = "Nicc Macro Detector";    File = "MacroDetector.ps1";             Category = "MACROS";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/MacroDetector.ps1" },
 
     # System & Utilities
-    @{ Name = "VPN Finder";             File = "VPNFinder.ps1";                 Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/VPNFinder.ps1" },
-    @{ Name = "Scheduled Tasks";        File = "SuspiciousScheduler.ps1";       Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/SuspiciousScheduler.ps1" },
-    @{ Name = "Signed Scheduled Tasks"; File = "Signed-Scheduled-Tasks.ps1";    Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Signed-Scheduled-Tasks.ps1" },
-    @{ Name = "NTFS Streams";           File = "Streams.ps1";                   Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Streams.ps1" },
-    @{ Name = "Digital Signatures";     File = "signatures.ps1";                Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/signatures.ps1" },
-    @{ Name = "Hard Disk Converter";    File = "RedLotusHardDiskVolumeConverter.ps1"; Category = "SYSTEM"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusHardDiskVolumeConverter.ps1" },
-    @{ Name = "Windows Services";       File = "Services.ps1";                  Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Services.ps1" },
+    [PSCustomObject]@{ Name = "VPN Finder";             File = "VPNFinder.ps1";                 Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/VPNFinder.ps1" },
+    [PSCustomObject]@{ Name = "Scheduled Tasks";        File = "SuspiciousScheduler.ps1";       Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/SuspiciousScheduler.ps1" },
+    [PSCustomObject]@{ Name = "Signed Scheduled Tasks"; File = "Signed-Scheduled-Tasks.ps1";    Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Signed-Scheduled-Tasks.ps1" },
+    [PSCustomObject]@{ Name = "NTFS Streams";           File = "Streams.ps1";                   Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Streams.ps1" },
+    [PSCustomObject]@{ Name = "Digital Signatures";     File = "signatures.ps1";                Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/signatures.ps1" },
+    [PSCustomObject]@{ Name = "Hard Disk Converter";    File = "RedLotusHardDiskVolumeConverter.ps1"; Category = "SYSTEM"; Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/RedLotusHardDiskVolumeConverter.ps1" },
+    [PSCustomObject]@{ Name = "Windows Services";       File = "Services.ps1";                  Category = "SYSTEM";    Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Services.ps1" },
 
     # Bundles
-    @{ Name = "All In One Checker";     File = "All-in-one.ps1";                Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/All-in-one.ps1" },
-    @{ Name = "Mini SS Check";          File = "miniss.ps1";                    Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/miniss.ps1" },
-    @{ Name = "SSToolsHub";             File = "SSToolsHub.ps1";                Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/SSToolsHub.ps1" },
-    @{ Name = "Spokwn Tool Collector";  File = "Spokwn-Collect.ps1";            Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Spokwn-Collect.ps1" },
-    @{ Name = "Collector (AV Exclusion)"; File = "Collector.ps1";              Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Collector.ps1" },
-    @{ Name = "AnyDesk Installer";      File = "anydesk.ps1";                   Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/anydesk.ps1" }
+    [PSCustomObject]@{ Name = "All In One Checker";     File = "All-in-one.ps1";                Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/All-in-one.ps1" },
+    [PSCustomObject]@{ Name = "Mini SS Check";          File = "miniss.ps1";                    Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/miniss.ps1" },
+    [PSCustomObject]@{ Name = "SSToolsHub";             File = "SSToolsHub.ps1";                Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/SSToolsHub.ps1" },
+    [PSCustomObject]@{ Name = "Spokwn Tool Collector";  File = "Spokwn-Collect.ps1";            Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Spokwn-Collect.ps1" },
+    [PSCustomObject]@{ Name = "Collector (AV Exclusion)"; File = "Collector.ps1";              Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/Collector.ps1" },
+    [PSCustomObject]@{ Name = "AnyDesk Installer";      File = "anydesk.ps1";                   Category = "BUNDLES";   Link = "https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/tools/anydesk.ps1" }
 )
 
 [xml]$xaml = @"
@@ -125,7 +125,7 @@ $script:ToolsCatalog = @(
                 <DockPanel>
                     <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
                         <TextBlock Text="Activity Console Output" Foreground="#64748B" FontSize="12" FontWeight="Bold" VerticalAlignment="Center"/>
-                        <Button Name="BtnClearConsole" Content="Clear Output" Foreground="#94A3B8" Background="#1E293B" Padding="8,3" BorderThickness="0" CornerRadius="4" HorizontalAlignment="Right" FontSize="10"/>
+                        <Button Name="BtnClearConsole" Content="Clear Output" Foreground="#94A3B8" Background="#1E293B" Padding="8,3" BorderThickness="0" HorizontalAlignment="Right" FontSize="10"/>
                     </Grid>
                     
                     <TextBox Name="TxtConsole" Background="Transparent" Foreground="#00FF66" 
@@ -155,13 +155,18 @@ $txtToolCount   = $window.FindName("TxtToolCount")
 function Log-Activity {
     param ([string]$message, [string]$type = "INFO")
     $timestamp = Get-Date -Format "HH:mm:ss"
-    $txtConsole.AppendText("[$timestamp] [$type] $message`n")
-    $txtConsole.ScrollToEnd()
+    if ($txtConsole) {
+        $txtConsole.AppendText("[$timestamp] [$type] $message`n")
+        $txtConsole.ScrollToEnd()
+    }
 }
 
-$toolsFolder = Join-Path -Path $PSScriptRoot -ChildPath "tools"
+# تحديد المجلد المحلي لحفظ الأدوات فيه بشكل آمن حتى لو تم تشغيل الكود عبر الذاكرة
+$baseDir = if ($PSScriptRoot) { $PSScriptRoot } else { [System.IO.Path]::Combine($env:TEMP, "ValyarSS") }
+$toolsFolder = Join-Path -Path $baseDir -ChildPath "tools"
+
 if (-not (Test-Path -Path $toolsFolder)) {
-    New-Item -ItemType Directory -Path $toolsFolder | Out-Null
+    New-Item -ItemType Directory -Path $toolsFolder -Force | Out-Null
 }
 
 $txtToolCount.Text = "$($script:ToolsCatalog.Count) Registered"
