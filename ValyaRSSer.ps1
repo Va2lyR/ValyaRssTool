@@ -3,7 +3,7 @@
   ValyaRSSer.ps1  —  Ultimate SS Forensics Suite  —  v2.0 Premium
 ================================================================================
   ONE-LINER CMD COMMAND (for GitHub deployment):
-    powershell.exe -NoP -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/YOURUSER/ValyaRSSer/main/ValyaRSSer.ps1 | iex"
+    powershell.exe -NoP -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/Va2lyR/ValyaRssTool/main/ValyaRSSer.ps1 | iex"
 
   DISCORD:  _iaec
 ================================================================================
@@ -44,7 +44,9 @@ if ($Bootstrap_Mode) {
         $content = Invoke-RestMethod -Uri $dlUrl -UseBasicParsing -ErrorAction Stop
         Set-Content -LiteralPath $localCache -Value $content -Encoding UTF8 -Force
         Write-Host "[ValyaRSSer] Cached locally - launching UI..." -ForegroundColor Green
-        & powershell.exe -NoExit -ExecutionPolicy Bypass -File "`"$localCache`"" -SkipDisclaimer:$SkipDisclaimer.IsPresent
+        $psArgs = @('-NoExit', '-ExecutionPolicy', 'Bypass', '-File', $localCache)
+        if ($SkipDisclaimer.IsPresent) { $psArgs += '-SkipDisclaimer' }
+        & powershell.exe $psArgs
         exit
     } catch {
         Write-Warning "Remote bootstrap failed. Running embedded copy..."
