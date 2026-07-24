@@ -113,7 +113,7 @@ $ToolData = @(
     @{ Name="Xeinn-SSTools.exe"; Desc="Xeinn SS tools"; Category="Xeinn"; Author="Xeinn"; Type="GitHub"; URL="https://github.com/Xeinn-Software/Xeinn-SS-Tools-Downloader/releases/latest" },
     @{ Name="NET-9.0-SDK.exe"; Desc=".NET 9.0 SDK"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" },
     @{ Name="NET-10.0-Runtime.exe"; Desc=".NET 10.0 Runtime"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://dotnet.microsoft.com/en-us/download/dotnet/10.0" },
-    @{ Name="VC_Redist.exe"; Desc="Visual C++ Redistributable"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://aka.ms/vs/17/release/vc_redist.x64.exe" },
+    @{ Name="VC_Redist.exe"; Desc="Visual C++ Redistributable"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://aka.ms/vs/17/release/vc_redist.x64.exe" }
 )
 
 # ==============================================================================
