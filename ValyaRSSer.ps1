@@ -44,9 +44,11 @@ if ($Bootstrap_Mode) {
         $content = Invoke-RestMethod -Uri $dlUrl -UseBasicParsing -ErrorAction Stop
         Set-Content -LiteralPath $localCache -Value $content -Encoding UTF8 -Force
         Write-Host "[ValyaRSSer] Cached locally - launching UI..." -ForegroundColor Green
-        $psArgs = @('-NoExit', '-ExecutionPolicy', 'Bypass', '-File', $localCache)
-        if ($SkipDisclaimer.IsPresent) { $psArgs += '-SkipDisclaimer' }
-        & powershell.exe $psArgs
+        if ($SkipDisclaimer.IsPresent) {
+            Start-Process powershell.exe -ArgumentList @('-NoExit', '-ExecutionPolicy', 'Bypass', '-File', "`"$localCache`"", '-SkipDisclaimer')
+        } else {
+            Start-Process powershell.exe -ArgumentList @('-NoExit', '-ExecutionPolicy', 'Bypass', '-File', "`"$localCache`"")
+        }
         exit
     } catch {
         Write-Warning "Remote bootstrap failed. Running embedded copy..."
