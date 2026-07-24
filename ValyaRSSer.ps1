@@ -222,7 +222,7 @@ function Show-VRDisclaimer {
           <Border.BorderThickness>1.5</Border.BorderThickness>
           <StackPanel>
             <StackPanel Orientation="Horizontal"><TextBlock Text="✦" FontSize="32" FontWeight="Bold" Foreground="#06B6D4"/><TextBlock Text="  ValyaRSSer" FontSize="28" FontWeight="Bold" Foreground="#FFFFFF" Margin="4,0,0,0" VerticalAlignment="Center"/><TextBlock Text=" v2.0" FontSize="15" Foreground="#A5B4FC" VerticalAlignment="Bottom" Margin="6,0,0,4"/></StackPanel>
-            <TextBlock Text="ULTIMATE SS FORENSICS SUITE  •  PREMIUM EDITION" FontSize="10" FontWeight="SemiBold" Foreground="#8B5CF6" LetterSpacing="2" Margin="2,8,0,0"/>
+            <TextBlock Text="ULTIMATE SS FORENSICS SUITE  •  PREMIUM EDITION" FontSize="10" FontWeight="SemiBold" Foreground="#8B5CF6" Margin="2,8,0,0"/>
           </StackPanel>
         </Border>
         <Border Height="1.5" CornerRadius="1" Margin="0,0,0,18"><Border.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,0"><GradientStop Color="Transparent" Offset="0"/><GradientStop Color="#4338CA" Offset="0.5"/><GradientStop Color="Transparent" Offset="1"/></LinearGradientBrush></Border.Background></Border>
@@ -262,8 +262,8 @@ function Show-VRDisclaimer {
       <Grid Grid.Row="1" VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="16"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
         <Button x:Name="VRCancel" Grid.Column="0" Content="Cancel" Height="48" Background="Transparent" Foreground="#94A3B8"
-          BorderBrush="#2D2D5A" BorderThickness="1" Cursor="Hand" FontSize="14" FontWeight="SemiBold" CornerRadius="10"/>
-        <Button x:Name="VRAccept" Grid.Column="2" Content="✓  Accept &amp; Continue" Height="48" Cursor="Hand" FontSize="14" FontWeight="Bold" CornerRadius="10" Foreground="#FFFFFF" BorderBrush="#6366F1" BorderThickness="1">
+          BorderBrush="#2D2D5A" BorderThickness="1" Cursor="Hand" FontSize="14" FontWeight="SemiBold"/>
+        <Button x:Name="VRAccept" Grid.Column="2" Content="✓  Accept &amp; Continue" Height="48" Cursor="Hand" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF" BorderBrush="#6366F1" BorderThickness="1">
           <Button.Background><LinearGradientBrush StartPoint="0,0" EndPoint="1,0"><GradientStop Color="#4F46E5" Offset="0"/><GradientStop Color="#0891B2" Offset="1"/></LinearGradientBrush></Button.Background>
         </Button>
       </Grid>
@@ -399,7 +399,7 @@ if (-not $SkipDisclaimer.IsPresent) {
             </Border>
             <TextBlock Text="  ValyaRSSer" FontSize="14" FontWeight="Bold" Foreground="#FFFFFF" VerticalAlignment="Center" Margin="8,0,0,0"/>
             <Border Background="#1E293B" CornerRadius="4" Padding="6,2" VerticalAlignment="Center" Margin="10,0,0,0">
-              <TextBlock Text="PREMIUM v2.0" FontSize="9" FontWeight="Bold" Foreground="#22D3EE" LetterSpacing="1.5"/>
+              <TextBlock Text="PREMIUM v2.0" FontSize="9" FontWeight="Bold" Foreground="#22D3EE"/>
             </Border>
             <TextBlock Text="  Ultimate SS Forensics Suite" FontSize="11" Foreground="#64748B" VerticalAlignment="Center" Margin="6,1,0,0"/>
           </StackPanel>
@@ -449,7 +449,7 @@ if (-not $SkipDisclaimer.IsPresent) {
                 </StackPanel>
               </Border>
 
-              <TextBlock Text="QUICK ACTIONS" FontSize="9" FontWeight="Bold" Foreground="{StaticResource Text4}" Margin="4,0,0,8" LetterSpacing="1.5"/>
+              <TextBlock Text="QUICK ACTIONS" FontSize="9" FontWeight="Bold" Foreground="{StaticResource Text4}" Margin="4,0,0,8"/>
               <Button x:Name="VRS_OpenFolderBtn" Content="📁   Open Install Folder"     Style="{StaticResource NavBtn}"/>
               <Button x:Name="VRS_ClearCacheBtn" Content="🗑️   Clear Downloaded Files"  Style="{StaticResource NavBtn}"/>
               <Button x:Name="VRS_OpenPSBtn"     Content="💻   Open PowerShell"         Style="{StaticResource NavBtn}"/>
@@ -458,7 +458,7 @@ if (-not $SkipDisclaimer.IsPresent) {
 
               <Border Height="1" Background="#1E293B" CornerRadius="1" Margin="4,14,4,14"/>
 
-              <TextBlock Text="INFO" FontSize="9" FontWeight="Bold" Foreground="{StaticResource Text4}" Margin="4,0,0,8" LetterSpacing="1.5"/>
+              <TextBlock Text="INFO" FontSize="9" FontWeight="Bold" Foreground="{StaticResource Text4}" Margin="4,0,0,8"/>
               <Border Background="#0B0F24" CornerRadius="10" Padding="12,12" Margin="0,0,0,8">
                 <StackPanel>
                   <TextBlock Text="💬 Discord" FontSize="10" Foreground="#64748B"/>
@@ -540,10 +540,10 @@ if (-not $SkipDisclaimer.IsPresent) {
               </Border>
               <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
                 <TextBlock Text="👁   Quick Launch:" FontSize="11" Foreground="#94A3B8" VerticalAlignment="Center" Margin="0,0,8,0"/>
-                <Button x:Name="VRS_QDoom"   Content="☢ Doomsday" Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#FCA5A5" FontSize="11" FontWeight="SemiBold" BorderBrush="#7F1D1D" BorderThickness="1" CornerRadius="8" Cursor="Hand"/>
-                <Button x:Name="VRS_QGhost"  Content="👻 Ghost"    Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#C4B5FD" FontSize="11" FontWeight="SemiBold" BorderBrush="#5B21B6" BorderThickness="1" CornerRadius="8" Cursor="Hand"/>
-                <Button x:Name="VRS_QVel"    Content="⚡ Velaris"  Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#FCD34D" FontSize="11" FontWeight="SemiBold" BorderBrush="#B45309" BorderThickness="1" CornerRadius="8" Cursor="Hand"/>
-                <Button x:Name="VRS_QHack"   Content="🛡 Clients"  Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#93C5FD" FontSize="11" FontWeight="SemiBold" BorderBrush="#1D4ED8" BorderThickness="1" CornerRadius="8" Cursor="Hand"/>
+                <Button x:Name="VRS_QDoom"   Content="☢ Doomsday" Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#FCA5A5" FontSize="11" FontWeight="SemiBold" BorderBrush="#7F1D1D" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="VRS_QGhost"  Content="👻 Ghost"    Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#C4B5FD" FontSize="11" FontWeight="SemiBold" BorderBrush="#5B21B6" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="VRS_QVel"    Content="⚡ Velaris"  Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#FCD34D" FontSize="11" FontWeight="SemiBold" BorderBrush="#B45309" BorderThickness="1" Cursor="Hand"/>
+                <Button x:Name="VRS_QHack"   Content="🛡 Clients"  Height="34" Padding="12,0"  Margin="2,0" Background="#1E1B4B" Foreground="#93C5FD" FontSize="11" FontWeight="SemiBold" BorderBrush="#1D4ED8" BorderThickness="1" Cursor="Hand"/>
               </StackPanel>
             </Grid>
           </Border>
@@ -595,11 +595,11 @@ if (-not $SkipDisclaimer.IsPresent) {
               <Grid>
                 <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal">
-                  <TextBlock Text="⚡ ACTIVITY CONSOLE" FontSize="9" FontWeight="Bold" Foreground="#22D3EE" FontFamily="Consolas" LetterSpacing="1.5"/>
+                  <TextBlock Text="⚡ ACTIVITY CONSOLE" FontSize="9" FontWeight="Bold" Foreground="#22D3EE" FontFamily="Consolas"/>
                   <TextBlock x:Name="VRS_ConsoleStat" Text="  • Ready" FontSize="9" Foreground="#475569" FontFamily="Consolas" VerticalAlignment="Center"/>
                 </StackPanel>
                 <Button Grid.Column="1" x:Name="VRS_ClrLog" Content="Clear" Height="22" Padding="10,0" Background="Transparent" Foreground="#64748B"
-                  FontSize="9" FontWeight="SemiBold" BorderBrush="#1E293B" BorderThickness="1" CornerRadius="5" Cursor="Hand"/>
+                  FontSize="9" FontWeight="SemiBold" BorderBrush="#1E293B" BorderThickness="1" Cursor="Hand"/>
               </Grid>
               <TextBox x:Name="VRS_LogBox" Grid.Row="2" Background="Transparent" Foreground="#67E8F9"
                 BorderThickness="0" FontFamily="Consolas" FontSize="11" IsReadOnly="True"
@@ -1727,7 +1727,7 @@ function VRS-MakeButton($tool){
     $btnGlow.Opacity     = 0
 
     $btn.Template = [Windows.Markup.XamlReader]::Parse(
-        "<ControlTemplate xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' TargetType='Button'>" +
+        "<ControlTemplate xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation' xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml' TargetType='Button'>" +
         "  <Border x:Name='BB' CornerRadius='11' BorderThickness='1.2' RenderTransformOrigin='0.5,0.5' Background='{TemplateBinding Background}' RenderTransform='{TemplateBinding Tag}' BorderBrush='#2A2A55'>" +
         "    <ContentPresenter HorizontalAlignment='Center' VerticalAlignment='Center'/>" +
         "  </Border>" +
