@@ -15,8 +15,8 @@ param(
     [string]$RemoteRepo = ""
 )
 
-$VRS_GitHubUser   = "YOURUSER"
-$VRS_GitHubRepo   = "ValyaRSSer"
+$VRS_GitHubUser   = "Va2lyR"
+$VRS_GitHubRepo   = "ValyaRssTool"
 $VRS_GitHubBranch = "main"
 $VRS_DefaultRawUrl = "https://raw.githubusercontent.com/$VRS_GitHubUser/$VRS_GitHubRepo/$VRS_GitHubBranch/ValyaRSSer.ps1"
 
