@@ -28,110 +28,71 @@ if (-not (Test-Administrator)) {
 $installDir = "$env:USERPROFILE\Downloads\ValyaRssTool"
 
 # ==============================================================================
-# TOOL DATA - MERGED FROM BOTH FILES WITH AUTHOR CREDITS
+# TOOL DATA
 # ==============================================================================
 $ToolData = @(
-    # From CheesySSTool
-    @{ Name="PrefetchView"; Desc="Parses prefetch, extracts file info"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/PrefetchView/releases/latest" },
-    @{ Name="BAMReveal"; Desc="Parses BAM forensic artefact"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/BAMReveal/releases/latest" },
-    @{ Name="StringsParser"; Desc="Strings + YARA + signatures scanner"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/StringsParser/releases/latest" },
-    @{ Name="Fileless"; Desc="Detects fileless via eventlog + memdump"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/Fileless/releases/latest" },
-    @{ Name="DPS-Analyzer"; Desc="Analyzes DPS memory"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/DPS-Analyzer/releases/latest" },
-    @{ Name="UserAssistView"; Desc="Parses UserAssist registry artifact"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/UserAssistView/releases/latest" },
-    @{ Name="JournalParser"; Desc="Parses NTFS USNJournal entries"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/JournalParser/releases/latest" },
-    @{ Name="InjGen"; Desc="Detects JNI/JVMTI memory injections"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/InjGen/releases/latest" },
-    @{ Name="USBDetector"; Desc="Detects USB device history"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/USBDetector/releases/latest" },
-    @{ Name="PFTrace"; Desc="Rundll32/Regsvr32 prefetch analysis"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/PFTrace/releases/latest" },
-    @{ Name="CheckDeletedUSN"; Desc="Compares USN timestamp vs boot time"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/CheckDeletedUSN/releases/latest" },
-    @{ Name="JARParser"; Desc="Parses JAR prefetch, DcomLaunch strings"; Category="Orbdiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/JARParser/releases/latest" },
-    @{ Name="BAM-parser"; Desc="Parses BAM entries for execution history"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/BAM-parser/releases/latest" },
-    @{ Name="PathsParser"; Desc="Extracts and analyzes executable paths"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/PathsParser/releases/latest" },
-    @{ Name="JournalTrace"; Desc="Traces file activity via USN journal"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/JournalTrace/releases/latest" },
-    @{ Name="KernelLiveDumpTool"; Desc="Captures live kernel memory dump"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/KernelLiveDumpTool/releases/latest" },
-    @{ Name="BamDeletedKeys"; Desc="Finds deleted BAM registry keys"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/BamDeletedKeys/releases/latest" },
-    @{ Name="Espouken Tool"; Desc="All-in-one SS forensics toolkit"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/Tool/releases/latest" },
-    @{ Name="pcasvc-executed"; Desc="Extracts PCA service execution records"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/pcasvc-executed/releases/latest" },
-    @{ Name="process-parser"; Desc="Parses process execution artefacts"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/process-parser/releases/latest" },
-    @{ Name="prefetch-parser"; Desc="Parses Windows prefetch files"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/prefetch-parser/releases/latest" },
-    @{ Name="ActivitiesCache"; Desc="Parses ActivitiesCache execution history"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/ActivitiesCache-execution/releases/latest" },
-    @{ Name="MeowDoomsdayFucker"; Desc="Detects Doomsday cheat artefacts"; Category="Tonynoh"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowDoomsdayFucker/releases/latest" },
-    @{ Name="MeowModAnalyzer"; Desc="Analyzes mod files for suspicious content"; Category="Tonynoh"; Author="MeowTonynoh"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/MeowTonynoh/MeowModAnalyzer/main/MeowModAnalyzer.ps1')" },
-    @{ Name="MeowResolver"; Desc="Resolves obfuscated strings in binaries"; Category="Tonynoh"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowResolver/releases/latest" },
-    @{ Name="MeowNovowareFucker"; Desc="Detects Novoware cheat artefacts"; Category="Tonynoh"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowNovowareFucker/releases/latest" },
-    @{ Name="MeowImportsChecker"; Desc="Checks PE imports for suspicious DLLs"; Category="Tonynoh"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowImportsChecker/releases/latest" },
-    @{ Name="MeowClientsFucker"; Desc="Detects known cheat client artefacts"; Category="Tonynoh"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowClientFucker/releases/latest" },
-    @{ Name="PSHunter"; Desc="Hunts suspicious PowerShell activity"; Category="Praiselily"; Author="praiselily"; Type="GitHub"; URL="https://github.com/praiselily/PSHunter/releases/latest" },
-    @{ Name="AltDetector"; Desc="Detects alternate account artefacts"; Category="Praiselily"; Author="praiselily"; Type="GitHub"; URL="https://github.com/praiselily/AltDetector/releases/latest" },
-    @{ Name="WeHateFakers"; Desc="Checks hotspot / tethering logs"; Category="Praiselily"; Author="praiselily"; Type="Cmd"; Command="iwr https://raw.githubusercontent.com/praiselily/WeHateFakers/refs/heads/main/HotspotLogs.ps1 | iex" },
-    @{ Name="CommonDirectories"; Desc="Lists files in common suspicious dirs"; Category="Praiselily"; Author="praiselily"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/CommonDirectories.ps1')" },
-    @{ Name="HarddiskConverter"; Desc="Converts harddisk identifiers for review"; Category="Praiselily"; Author="praiselily"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/HarddiskConverter.ps1')" },
-    @{ Name="Services"; Desc="Lists and analyzes running services"; Category="Praiselily"; Author="praiselily"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Services.ps1')" },
-    @{ Name="SignedScheduledTasks"; Desc="Finds unsigned / suspicious scheduled tasks"; Category="Praiselily"; Author="praiselily"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/praiselily/lilith-ps/refs/heads/main/Signed-Scheduled-Tasks.ps1')" },
-    @{ Name="RL ModAnalyzer"; Desc="Analyzes mod files for cheat indicators"; Category="RedLotus"; Author="ItzIceHere"; Type="GitHub"; URL="https://github.com/ItzIceHere/RedLotus-Mod-Analyzer/releases/latest" },
-    @{ Name="RL TaskSentinel"; Desc="Monitors scheduled tasks for anomalies"; Category="RedLotus"; Author="ItzIceHere"; Type="GitHub"; URL="https://github.com/ItzIceHere/RedLotus-Task-Sentinel/releases/latest" },
-    @{ Name="RL AltChecker"; Desc="Checks for alternate account indicators"; Category="RedLotus"; Author="ItzIceHere"; Type="GitHub"; URL="https://github.com/ItzIceHere/RedLotusAltChecker/releases/latest" },
-    @{ Name="ComputerActivityView"; Desc="Timeline of computer activity events"; Category="Others"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/computer_activity_view.html" },
-    @{ Name="AmcacheParser"; Desc="Parses AMCache with YARA + signatures"; Category="Others"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/AmcacheParser.zip" },
-    @{ Name="SystemInformer"; Desc="Advanced process and kernel inspector"; Category="Others"; Author="winsiderss"; Type="Link"; URL="https://www.systeminformer.com/canary" },
-    @{ Name="DIE-engine"; Desc="Detects file type, packer, compiler"; Category="Others"; Author="horsicq"; Type="Web"; URL="https://github.com/horsicq/DIE-engine/releases" },
-    @{ Name="DQRKIS-FUCKER"; Desc="Detects DQRKIS cheat artefacts"; Category="Others"; Author="cheesecatlol"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/cheesecatlol/DQRKIS-FUCKER/refs/heads/main/DqrkisFucker.ps1')" },
-    @{ Name="MacroDetector"; Desc="Detects macro / clicker software traces"; Category="Others"; Author="NiccBlahh"; Type="Cmd"; Command="Invoke-Expression (Invoke-RestMethod 'https://raw.githubusercontent.com/NiccBlahh/MacroDetector/refs/heads/main/MacroDetector.ps1')" },
-    @{ Name="Jarabel"; Desc="Locates .jar files with detailed checks"; Category="Others"; Author="nay-cat"; Type="GitHub"; URL="https://github.com/nay-cat/Jarabel/releases/latest" },
-    @{ Name="Luyten"; Desc="Open source Java decompiler GUI (Procyon)"; Category="Others"; Author="deathmarine"; Type="GitHub"; URL="https://github.com/deathmarine/Luyten/releases/latest" },
-    @{ Name="VMAware"; Desc="Advanced VM detection library and tool"; Category="Others"; Author="kernelwernel"; Type="GitHub"; URL="https://github.com/kernelwernel/VMAware/releases/latest" },
-    @{ Name="Velociraptor"; Desc="Endpoint DFIR and threat hunting agent"; Category="Others"; Author="Velocidex"; Type="GitHub"; URL="https://github.com/Velocidex/velociraptor/releases/latest" },
-    @{ Name="NTFS Parser"; Desc="NTFS forensics: MFT, Bitlocker, USN"; Category="Others"; Author="thewhiteninja"; Type="GitHub"; URL="https://github.com/thewhiteninja/ntfstool/releases/latest" },
-    @{ Name="Hayabusa"; Desc="Fast forensics timeline generator"; Category="Others"; Author="Yamato-Security"; Type="GitHub"; URL="https://github.com/Yamato-Security/hayabusa/releases/latest" },
-    @{ Name="Everything"; Desc="Instant filename search engine for Windows"; Category="Others"; Author="voidtools"; Type="Link"; URL="https://www.voidtools.com/downloads/" },
-    @{ Name="HxD"; Desc="Fast hex editor with disk and RAM editing"; Category="Others"; Author="mh-nexus"; Type="Link"; URL="https://mh-nexus.de/en/hxd/" },
-    @{ Name="bstrings"; Desc="Searches strings with regex + YARA"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/bstrings.zip" },
-    @{ Name="JLECmd"; Desc="Parses Jump List files (CLI)"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/JLECmd.zip" },
-    @{ Name="JumpListExplorer"; Desc="GUI explorer for Jump List artefacts"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/JumpListExplorer.zip" },
-    @{ Name="MFTECmd"; Desc="Parses MFT, UsnJrnl, LogFile, Boot"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/MFTECmd.zip" },
-    @{ Name="PECmd"; Desc="Parses Windows prefetch files (CLI)"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/PECmd.zip" },
-    @{ Name="RecentFileCacheParser"; Desc="Parses RecentFileCache.bcf artefact"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/RecentFileCacheParser.zip" },
-    @{ Name="RegistryExplorer"; Desc="GUI explorer for registry hives"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/RegistryExplorer.zip" },
-    @{ Name="ShellBagsExplorer"; Desc="GUI explorer for ShellBags artefacts"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/ShellBagsExplorer.zip" },
-    @{ Name="SrumECmd"; Desc="Parses SRUM database for usage data"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/SrumECmd.zip" },
-    @{ Name="TimelineExplorer"; Desc="GUI viewer for CSV timeline output"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/TimelineExplorer.zip" },
-    @{ Name="FullEventLogView"; Desc="Views all Windows event log entries"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/fulleventlogview.zip" },
-    @{ Name="NetworkUsageView"; Desc="Shows network usage per process"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/networkusageview.zip" },
-    @{ Name="BrowserDownloadsView"; Desc="Lists all browser download history"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/browserdownloadsview.zip" },
-    @{ Name="AlternateStreamView"; Desc="Reveals hidden NTFS alternate streams"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/alternatestreamview.zip" },
-    @{ Name="USBDeview"; Desc="Lists all USB devices ever connected"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/usbdeview.zip" },
-    @{ Name="OpenSaveFilesView"; Desc="Shows files opened/saved via dialogs"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/opensavefilesview.zip" },
-    @{ Name="ExecutedProgramsList"; Desc="Lists programs run from various sources"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/executedprogramslist.zip" },
-    @{ Name="TaskSchedulerView"; Desc="Views all scheduled tasks and history"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/taskschedulerview.zip" },
-    @{ Name="JumpListsView"; Desc="Views Jump List recent/frequent files"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/jumplistsview.zip" },
-    @{ Name="WinPrefetchView"; Desc="Views Windows prefetch file details"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/winprefetchview.zip" },
-    @{ Name="RegScanner"; Desc="Scans registry for values / patterns"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/regscanner.zip" },
-    @{ Name="ShellBagsView"; Desc="Views ShellBags folder access history"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/shellbagsview.zip" },
-    @{ Name="NET 9.0"; Desc="Microsoft .NET 9 SDK runtime"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://download.visualstudio.microsoft.com/download/pr/92dba916-bc51-4e76-8b0e-d41d37ce5fa4/ab08f3e95bf7a3d3da336a7e8c8eca63/dotnet-sdk-9.0.203-win-x64.exe" },
-    @{ Name="NET 10.0"; Desc="Microsoft .NET 10 runtime"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://download.visualstudio.microsoft.com/download/pr/b3f93f0e-9e5e-4b4c-a4c4-36db0c4b0e3e/dotnet-runtime-10.0.0-win-x64.exe" },
-    @{ Name="VSRedist"; Desc="Visual C++ redistributable (x64)"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://aka.ms/vs/17/release/vc_redist.x64.exe" },
-    
-    # Additional tools from SSToolsHub
-    @{ Name="WinPrefetchView_x64.zip"; Desc="View prefetch files"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/winprefetchview-x64.zip" },
-    @{ Name="LastActivityView.zip"; Desc="List recent user activity"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/lastactivityview.zip" },
-    @{ Name="UsbDriveLog.zip"; Desc="Show USB drive history"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/usbdrivelog.zip" },
-    @{ Name="WinDefLogView.zip"; Desc="Windows Defender log viewer"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/windeflogview.zip" },
-    @{ Name="UninstallView_x64.zip"; Desc="List installed programs"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/uninstallview-x64.zip" },
-    @{ Name="LoadedDllsView_x64.zip"; Desc="Loaded DLL list"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/loadeddllsview-x64.zip" },
-    @{ Name="Clipboardic.zip"; Desc="Clipboard history viewer"; Category="NirSoft"; Author="NirSoft"; Type="GitHub"; URL="https://www.nirsoft.net/utils/clipboardic.zip" },
-    @{ Name="WxTCmd.zip"; Desc="Windows Timeline database"; Category="Zimmerman"; Author="Eric Zimmerman"; Type="GitHub"; URL="https://download.ericzimmermanstools.com/net6/WxTCmd.zip" },
+    @{ Name="WinPrefetchView_x64.zip"; Desc="View prefetch files"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/winprefetchview-x64.zip" },
+    @{ Name="LastActivityView.zip"; Desc="List recent user activity"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/lastactivityview.zip" },
+    @{ Name="UsbDriveLog.zip"; Desc="Show USB drive history"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/usbdrivelog.zip" },
+    @{ Name="WinDefLogView.zip"; Desc="Windows Defender log viewer"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/windeflogview.zip" },
+    @{ Name="ShellBagsView.zip"; Desc="Shell bags / folder history"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/shellbagsview.zip" },
+    @{ Name="UninstallView_x64.zip"; Desc="List installed programs"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/uninstallview-x64.zip" },
+    @{ Name="LoadedDllsView_x64.zip"; Desc="Loaded DLL list"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/loadeddllsview-x64.zip" },
+    @{ Name="JumpListsView.zip"; Desc="Jump list history"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/jumplistsview.zip" },
+    @{ Name="Clipboardic.zip"; Desc="Clipboard history viewer"; Category="NirSoft"; Author="NirSoft"; Type="Web"; URL="https://www.nirsoft.net/utils/clipboardic.zip" },
+    @{ Name="TimelineExplorer.zip"; Desc="Timeline analysis"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/TimelineExplorer.zip" },
+    @{ Name="SrumECmd.zip"; Desc="SRUM database parser"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/SrumECmd.zip" },
+    @{ Name="AmcacheParser.zip"; Desc="Amcache analysis tool"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/AmcacheParser.zip" },
+    @{ Name="WxTCmd.zip"; Desc="Windows Timeline database"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net6/WxTCmd.zip" },
+    @{ Name="RegistryExplorer.zip"; Desc="Registry explorer"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/RegistryExplorer.zip" },
+    @{ Name="MFTECmd.zip"; Desc="MFT filesystem parser"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/MFTECmd.zip" },
+    @{ Name="JLECmd.zip"; Desc="JumpList CSV parser"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/JLECmd.zip" },
+    @{ Name="JumpListExplorer.zip"; Desc="JumpList GUI parser"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/JumpListExplorer.zip" },
+    @{ Name="PECmd.zip"; Desc="Prefetch parser"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/PECmd.zip" },
+    @{ Name="RecentFileCacheParser.zip"; Desc="Recent file cache parser"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/RecentFileCacheParser.zip" },
+    @{ Name="ShellBagsExplorer.zip"; Desc="Shell bags explorer"; Category="EricZimmerman"; Author="Eric Zimmerman"; Type="Web"; URL="https://download.ericzimmermanstools.com/net9/ShellBagsExplorer.zip" },
+    @{ Name="BAMParser.exe"; Desc="BAM record parser"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/BAM-parser/releases/download/v1.2.9/BAMParser.exe" },
+    @{ Name="PrefetchParser.exe"; Desc="Prefetch parser"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/prefetch-parser/releases/download/v1.5.5/PrefetchParser.exe" },
+    @{ Name="ProcessParser.exe"; Desc="Process information parser"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/process-parser/releases/download/v0.5.5/ProcessParser.exe" },
+    @{ Name="PcaSvcExecuted.exe"; Desc="PCA service execution record"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/pcasvc-executed/releases/download/v0.8.7/PcaSvcExecuted.exe" },
+    @{ Name="JournalTraceNormal.exe"; Desc="USN Journal trace"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/JournalTrace/releases/download/1.2/JournalTraceNormal.exe" },
+    @{ Name="PathsParser.exe"; Desc="File path history"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/PathsParser/releases/download/v1.2/PathsParser.exe" },
+    @{ Name="KernelLiveDumpTool.exe"; Desc="Kernel live dump tool"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/KernelLiveDumpTool/releases/download/v1.1/KernelLiveDumpTool.exe" },
+    @{ Name="espouken.exe"; Desc="Espouken analysis tool"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/Tool/releases/download/v1.1.2/espouken.exe" },
+    @{ Name="BamDeletedKeys.exe"; Desc="Deleted BAM records"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/BamDeletedKeys/releases/download/v1.0/BamDeletedKeys.exe" },
+    @{ Name="ActivitiesCache.exe"; Desc="Activities cache execution"; Category="Spokwn"; Author="spokwn"; Type="GitHub"; URL="https://github.com/spokwn/ActivitiesCache-execution/releases/latest" },
     @{ Name="Echo-Journal.exe"; Desc="Journal analysis tool"; Category="Echo"; Author="Echo"; Type="GitHub"; URL="https://github.com/Echo-Anticheat/Echo-Journal/raw/main/echo-journal.exe" },
     @{ Name="UserAssist.exe"; Desc="UserAssist registry viewer"; Category="Echo"; Author="Echo"; Type="GitHub"; URL="https://github.com/korkusuzadX/TR-SS-AutoDownloader/raw/main/echo%20tools/echo-userassist.exe" },
     @{ Name="UsbTool.exe"; Desc="USB record analysis"; Category="Echo"; Author="Echo"; Type="GitHub"; URL="https://github.com/korkusuzadX/TR-SS-AutoDownloader/raw/main/echo%20tools/echo-usb.exe" },
+    @{ Name="pv++.exe"; Desc="Detailed Prefetch analyzer"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/PrefetchView/releases/download/v1.6.6/pv++.exe" },
+    @{ Name="OrbDiff-AmcacheParser.exe"; Desc="Detailed Amcache analyzer"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/AmcacheParser/releases/download/v1.0/AmcacheParser.exe" },
+    @{ Name="JARParser.exe"; Desc="JAR scanner"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/JARParser/releases/download/v1.2/JARParser.exe" },
+    @{ Name="fileless.exe"; Desc="Fileless malware detector"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/Fileless/releases/download/v1.3/fileless.exe" },
+    @{ Name="BAMReveal.exe"; Desc="BAM records viewer"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/BAMReveal/releases/download/v1.3/BAMReveal.exe" },
+    @{ Name="OrbDiff-DPSAnalyzer.exe"; Desc="DPS analysis tool"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/DPS-Analyzer/releases/download/v1.1/dpsanalyzer.exe" },
+    @{ Name="OrbDiff-UserAssistView.exe"; Desc="UserAssist viewer"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/UserAssistView/releases/latest" },
+    @{ Name="OrbDiff-JournalParser.exe"; Desc="Journal parser"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/JournalParser/releases/latest" },
+    @{ Name="OrbDiff-InjGen.exe"; Desc="Injection detection"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/InjGen/releases/latest" },
+    @{ Name="OrbDiff-USBDetector.exe"; Desc="USB detection"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/USBDetector/releases/latest" },
+    @{ Name="OrbDiff-PFTrace.exe"; Desc="Prefetch trace"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/PFTrace/releases/latest" },
+    @{ Name="OrbDiff-CheckDeletedUSN.exe"; Desc="Deleted USN check"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/CheckDeletedUSN/releases/latest" },
+    @{ Name="OrbDiff-StringsParser.exe"; Desc="Strings parser"; Category="OrbDiff"; Author="Orbdiff"; Type="GitHub"; URL="https://github.com/Orbdiff/StringsParser/releases/latest" },
     @{ Name="RedLotusModAnalyzer.exe"; Desc="Mod analysis tool"; Category="RedLotus"; Author="ItzIceHere"; Type="GitHub"; URL="https://github.com/ItzIceHere/RedLotus-Mod-Analyzer/releases/download/RL/RedLotusModAnalyzer.exe" },
+    @{ Name="RedLotusAltChecker.exe"; Desc="Alt account checker"; Category="RedLotus"; Author="ItzIceHere"; Type="GitHub"; URL="https://github.com/ItzIceHere/RedLotusAltChecker/releases/download/RL/RedLotusAltChecker.exe" },
+    @{ Name="RedLotusTaskSentinel.exe"; Desc="Task monitor sentinel"; Category="RedLotus"; Author="ItzIceHere"; Type="GitHub"; URL="https://github.com/ItzIceHere/RedLotus-Task-Sentinel/releases/download/RL/RedLotusTaskSentinel.exe" },
     @{ Name="PathDuzenleyicisiV2.exe"; Desc="Path organizer v2"; Category="TRSSCommunity"; Author="TRSSCommunity"; Type="GitHub"; URL="https://github.com/trSScommunity/PathDuzenleyiciV2/raw/refs/heads/main/PathDuzenleyicisiV2.exe" },
     @{ Name="MzHunter.exe"; Desc="MZ header scanner"; Category="TRSSCommunity"; Author="TRSSCommunity"; Type="GitHub"; URL="https://github.com/trSScommunity/MZHunter/raw/refs/heads/main/MzHunter.exe" },
-    @{ Name="MandarinTool.jar"; Desc="Multi SS tool / JAR decompiler"; Category="TRSSCommunity"; Author="Mehmetyll"; Type="GitHub"; URL="https://github.com/Mehmetyll/Mandarin-Tool/releases/download/Mandarin-Tool/MandarinTool.jar" },
-    @{ Name="MagnetEncryptedDiskDetector.exe"; Desc="Encrypted disk detector"; Category="Magnet"; Author="Magnet"; Type="GitHub"; URL="https://go.magnetforensics.com/e/52162/MagnetEncryptedDiskDetector/kpt9bg/1663239667/h/LtXFtTL-Soawv5C1oL3BIEghi7e1Lx93yesZLR--Ok0" },
-    @{ Name="MRCv120.exe"; Desc="RAM dump tool"; Category="Magnet"; Author="Magnet"; Type="GitHub"; URL="https://go.magnetforensics.com/e/52162/mail-utm-campaign-UTMC-0000044/llr4bg/1663358653/h/4kZ9Y4i2yPRqBzuQMrywA_v5bfkpG3rG8gEiSWrYU70" },
-    @{ Name="FTK_Imager_4.7.1.exe"; Desc="Disk imaging tool"; Category="Forensics"; Author="AccessData"; Type="GitHub"; URL="https://archive.org/download/access-data-ftk-imager-4.7.1/AccessData_FTK_Imager_4.7.1.exe" },
+    @{ Name="MandarinTool.jar"; Desc="Multi SS tool / JAR decompiler"; Category="TRSSCommunity"; Author="TRSSCommunity"; Type="GitHub"; URL="https://github.com/Mehmetyll/Mandarin-Tool/releases/download/Mandarin-Tool/MandarinTool.jar" },
+    @{ Name="MagnetEncryptedDiskDetector.exe"; Desc="Encrypted disk detector"; Category="Magnet"; Author="Magnet"; Type="Web"; URL="https://go.magnetforensics.com/e/52162/MagnetEncryptedDiskDetector/kpt9bg/1663239667/h/LtXFtTL-Soawv5C1oL3BIEghi7e1Lx93yesZLR--Ok0" },
+    @{ Name="MRCv120.exe"; Desc="RAM dump tool"; Category="Magnet"; Author="Magnet"; Type="Web"; URL="https://go.magnetforensics.com/e/52162/mail-utm-campaign-UTMC-0000044/llr4bg/1663358653/h/4kZ9Y4i2yPRqBzuQMrywA_v5bfkpG3rG8gEiSWrYU70" },
+    @{ Name="FTK_Imager_4.7.1.exe"; Desc="Disk imaging tool"; Category="Forensics"; Author="AccessData"; Type="Web"; URL="https://archive.org/download/access-data-ftk-imager-4.7.1/AccessData_FTK_Imager_4.7.1.exe" },
     @{ Name="hayabusa-3.6.0-win-aarch64.zip"; Desc="Windows event log analyzer"; Category="Forensics"; Author="Yamato-Security"; Type="GitHub"; URL="https://github.com/Yamato-Security/hayabusa/releases/download/v3.6.0/hayabusa-3.6.0-win-aarch64.zip" },
-    @{ Name="ProcessHacker-Setup.exe"; Desc="Process hacker"; Category="SystemTools"; Author="winsiderss"; Type="GitHub"; URL="https://sourceforge.net/projects/processhacker/files/latest/download" },
+    @{ Name="Velocidace.exe"; Desc="Digital forensics platform"; Category="Forensics"; Author="Velocidex"; Type="GitHub"; URL="https://github.com/Velocidex/velociraptor/releases/download/v0.75/velociraptor-v0.75.1-windows-amd64.exe" },
+    @{ Name="SystemInformer_Canary_Setup.exe"; Desc="Advanced system monitor"; Category="SystemTools"; Author="winsiderss"; Type="GitHub"; URL="https://github.com/winsiderss/si-builds/releases/download/3.2.25275.112/systeminformer-build-canary-setup.exe" },
+    @{ Name="Everything-Setup.exe"; Desc="Instant file search engine"; Category="SystemTools"; Author="voidtools"; Type="Web"; URL="https://www.voidtools.com/Everything-1.4.1.1032.x64-Setup.exe" },
+    @{ Name="ProcessHacker-Setup.exe"; Desc="Process hacker"; Category="SystemTools"; Author="winsiderss"; Type="Web"; URL="https://sourceforge.net/projects/processhacker/files/latest/download" },
     @{ Name="InjGen.exe"; Desc="Injection detection tool"; Category="Analysis"; Author="NotRequiem"; Type="GitHub"; URL="https://github.com/NotRequiem/InjGen/releases/download/v2.0/InjGen.exe" },
+    @{ Name="Luyten.exe"; Desc="Java decompiler"; Category="Analysis"; Author="deathmarine"; Type="GitHub"; URL="https://github.com/deathmarine/Luyten/releases/download/v0.5.4_Rebuilt_with_Latest_depenencies/luyten-0.5.4.exe" },
     @{ Name="dpsanalyzer.exe"; Desc="DPS analyzer"; Category="Analysis"; Author="nay-cat"; Type="GitHub"; URL="https://github.com/nay-cat/dpsanalyzer/releases/download/1.3/dpsanalyzer.exe" },
     @{ Name="DIE_engine_portable.zip"; Desc="Detect-It-Easy PE analyzer"; Category="Analysis"; Author="horsicq"; Type="GitHub"; URL="https://github.com/horsicq/DIE-engine/releases/download/3.09/die_win64_portable_3.09_x64.zip" },
     @{ Name="Jarabel.Light.exe"; Desc="JAR analysis tool"; Category="Misc"; Author="nay-cat"; Type="GitHub"; URL="https://github.com/nay-cat/Jarabel/releases/download/light/Jarabel.Light.exe" },
@@ -139,11 +100,20 @@ $ToolData = @(
     @{ Name="CachedProgramsList.exe"; Desc="Cache program list"; Category="Misc"; Author="ponei"; Type="GitHub"; URL="https://github.com/ponei/CachedProgramsList/releases/download/1.1/CachedProgramsList.exe" },
     @{ Name="TimeChangeDetect.exe"; Desc="System time change detector"; Category="Misc"; Author="santiagolin"; Type="GitHub"; URL="https://github.com/santiagolin/TimeChangeDetect/releases/download/1.0/TimeChangeDetect.exe" },
     @{ Name="HardlinkFinder.exe"; Desc="Hardlink detection"; Category="Misc"; Author="praiselily"; Type="GitHub"; URL="https://github.com/praiselily/HardlinkFinder/releases/download/Tools/hardlink.exe" },
+    @{ Name="MeowNovowareFucker.exe"; Desc="Novoware client detector"; Category="Meow"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowNovowareFucker/raw/refs/heads/main/MeowNovowareFucker.exe" },
+    @{ Name="MeowDoomsdayFucker.exe"; Desc="Doomsday client detector"; Category="Meow"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowDoomsdayFucker/raw/refs/heads/main/MeowDoomsdayFucker.exe" },
+    @{ Name="MeowResolver.exe"; Desc="Meow resolver"; Category="Meow"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowResolver/releases/latest" },
+    @{ Name="MeowImportsChecker.exe"; Desc="Imports checker"; Category="Meow"; Author="MeowTonynoh"; Type="GitHub"; URL="https://github.com/MeowTonynoh/MeowImportsChecker/releases/latest" },
+    @{ Name="PSHunter.exe"; Desc="PS hunter tool"; Category="Praiselily"; Author="praiselily"; Type="GitHub"; URL="https://github.com/praiselily/PSHunter/releases/latest" },
+    @{ Name="AltDetector.exe"; Desc="Alt account detector"; Category="Praiselily"; Author="praiselily"; Type="GitHub"; URL="https://github.com/praiselily/AltDetector/releases/latest" },
     @{ Name="TeslaPro-MacroFinder.exe"; Desc="Macro finder tool"; Category="TeslaPro"; Author="TeslaPro"; Type="GitHub"; URL="https://github.com/TeslaPros/TeslaProMacroFinder/releases/latest" },
     @{ Name="TeslaPro-DoomsdayDetector.exe"; Desc="Doomsday detector"; Category="TeslaPro"; Author="TeslaPro"; Type="GitHub"; URL="https://github.com/TeslaPros/DoomsdayDetector/releases/latest" },
     @{ Name="TeslaPro-VPNFinder.exe"; Desc="VPN finder"; Category="TeslaPro"; Author="TeslaPro"; Type="GitHub"; URL="https://github.com/TeslaPros/VPNChecker/releases/latest" },
     @{ Name="TeslaPro-GhostClientFucker.exe"; Desc="Ghost client detector"; Category="TeslaPro"; Author="TeslaPro"; Type="GitHub"; URL="https://github.com/TeslaPros/GhostClientFucker/releases/latest" },
-    @{ Name="Xeinn-SSTools.exe"; Desc="Xeinn SS tools"; Category="Xeinn"; Author="Xeinn"; Type="GitHub"; URL="https://github.com/Xeinn-Software/Xeinn-SS-Tools-Downloader/releases/latest" }
+    @{ Name="Xeinn-SSTools.exe"; Desc="Xeinn SS tools"; Category="Xeinn"; Author="Xeinn"; Type="GitHub"; URL="https://github.com/Xeinn-Software/Xeinn-SS-Tools-Downloader/releases/latest" },
+    @{ Name="NET-9.0-SDK.exe"; Desc=".NET 9.0 SDK"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://dotnet.microsoft.com/en-us/download/dotnet/9.0" },
+    @{ Name="NET-10.0-Runtime.exe"; Desc=".NET 10.0 Runtime"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://dotnet.microsoft.com/en-us/download/dotnet/10.0" },
+    @{ Name="VC_Redist.exe"; Desc="Visual C++ Redistributable"; Category="Dependencies"; Author="Microsoft"; Type="Web"; URL="https://aka.ms/vs/17/release/vc_redist.x64.exe" },
 )
 
 # ==============================================================================
@@ -167,8 +137,8 @@ $ToolData = @(
         <SolidColorBrush x:Key="MainBg"     Color="#000000"/>
         <SolidColorBrush x:Key="SidebarBg"  Color="#0A0A0A"/>
         <SolidColorBrush x:Key="CardBg"     Color="#1A1A1A"/>
-        <SolidColorBrush x:Key="Accent"     Color="#8B0000"/>
-        <SolidColorBrush x:Key="AccentDim"  Color="#5C0000"/>
+        <SolidColorBrush x:Key="Accent"     Color="#B8860B"/>
+        <SolidColorBrush x:Key="AccentDim"  Color="#7A5A08"/>
         <SolidColorBrush x:Key="TextMain"   Color="#FFFFFF"/>
         <SolidColorBrush x:Key="TextMuted"  Color="#808080"/>
         <SolidColorBrush x:Key="ConsoleBg"  Color="#050505"/>
@@ -191,7 +161,7 @@ $ToolData = @(
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#2A0000"/>
+                                <Setter Property="Background" Value="#241C08"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -214,8 +184,8 @@ $ToolData = @(
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#338B0000"/>
-                                <Setter Property="Foreground" Value="#8B0000"/>
+                                <Setter Property="Background" Value="#33B8860B"/>
+                                <Setter Property="Foreground" Value="#B8860B"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -224,7 +194,7 @@ $ToolData = @(
         </Style>
     </Window.Resources>
 
-    <Border Background="{StaticResource MainBg}" BorderBrush="#8B0000" BorderThickness="1" CornerRadius="12">
+    <Border Background="{StaticResource MainBg}" BorderBrush="#B8860B" BorderThickness="1" CornerRadius="12">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="42"/>
@@ -258,17 +228,19 @@ $ToolData = @(
                 </Grid.ColumnDefinitions>
 
                 <!-- Sidebar -->
-                <Border Grid.Column="0" Background="{StaticResource SidebarBg}" BorderBrush="#8B0000" BorderThickness="0,0,1,0">
+                <Border Grid.Column="0" Background="{StaticResource SidebarBg}" BorderBrush="#B8860B" BorderThickness="0,0,1,0">
                     <StackPanel Margin="10,14,10,14">
 
-                        <Border Background="#050505" CornerRadius="10" Margin="0,0,0,14" Padding="0,10">
-                            <TextBlock x:Name="CatBlock"
-                                Text="   /\_____/\  &#x0a;  /  ^   ^  \ &#x0a; (  =  w  =  )&#x0a;  \  (___) / &#x0a;  /  |   |  \ &#x0a; (__|   |__)"
-                                FontFamily="Consolas" FontSize="9"
-                                Foreground="{StaticResource Accent}"
-                                HorizontalAlignment="Center"
-                                TextAlignment="Left"
-                                xml:space="preserve"/>
+                        <Border Background="#050505" CornerRadius="10" Margin="0,0,0,14" Padding="0,16">
+                            <StackPanel HorizontalAlignment="Center">
+                                <TextBlock x:Name="CatBlock" Text="VRT"
+                                    FontFamily="Consolas" FontSize="26" FontWeight="Bold"
+                                    Foreground="{StaticResource Accent}"
+                                    HorizontalAlignment="Center"/>
+                                <TextBlock Text="v1.0" FontFamily="Consolas" FontSize="9"
+                                    Foreground="{StaticResource TextMuted}"
+                                    HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            </StackPanel>
                         </Border>
 
                         <TextBlock Text="ACTIONS" FontSize="9" FontWeight="Bold" Foreground="{StaticResource TextMuted}" Margin="4,0,0,6"/>
@@ -276,14 +248,14 @@ $ToolData = @(
                         <Button x:Name="ClearCacheBtn" Content="  Clear Downloaded Files"   Style="{StaticResource SideBtn}"/>
                         <Button x:Name="OpenCmdBtn"    Content="  Open CMD"                 Style="{StaticResource SideBtn}"/>
 
-                        <Separator Background="#8B0000" Margin="0,10,0,10"/>
+                        <Separator Background="#B8860B" Margin="0,10,0,10"/>
 
                         <TextBlock Text="CREDITS" FontSize="9" FontWeight="Bold" Foreground="{StaticResource TextMuted}" Margin="4,0,0,6"/>
                         <TextBlock Text="Made by Va2lyR" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource TextMain}" Margin="4,2,0,4"/>
                         <TextBlock Text="Discord: Va2lyR" FontSize="10" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" Margin="4,1,0,0"/>
                         <TextBlock Text="GitHub: Va2lyR" FontSize="10" Foreground="{StaticResource TextMuted}" TextWrapping="Wrap" Margin="4,1,0,0"/>
 
-                        <Separator Background="#8B0000" Margin="0,10,0,10"/>
+                        <Separator Background="#B8860B" Margin="0,10,0,10"/>
                         <TextBlock x:Name="InstPathBlock" Text="" FontSize="9" Foreground="#404040" TextWrapping="Wrap" Margin="4,0"/>
                     </StackPanel>
                 </Border>
@@ -309,7 +281,7 @@ $ToolData = @(
                                 <TextBlock x:Name="StatusTitle" Text="Ready" FontSize="20" FontWeight="SemiBold" Foreground="{StaticResource TextMain}"/>
                                 <TextBlock x:Name="StatusSub"   Text="Select a tool to launch or download it." FontSize="11" Foreground="{StaticResource TextMuted}"/>
                             </StackPanel>
-                            <Border Grid.Column="1" Background="#1A0000" CornerRadius="8" Padding="10,4" VerticalAlignment="Center">
+                            <Border Grid.Column="1" Background="#1C1C1C" CornerRadius="8" Padding="10,4" VerticalAlignment="Center">
                                 <TextBlock x:Name="StatusBadge" Text="IDLE" FontSize="12" FontWeight="Bold" Foreground="{StaticResource Accent}"/>
                             </Border>
                         </Grid>
@@ -340,7 +312,7 @@ $ToolData = @(
                                                             <Condition Property="IsMouseOver" Value="True"/>
                                                             <Condition Property="IsSelected" Value="False"/>
                                                         </MultiTrigger.Conditions>
-                                                        <Setter TargetName="TabBorder" Property="Background" Value="#2A0000"/>
+                                                        <Setter TargetName="TabBorder" Property="Background" Value="#241C08"/>
                                                         <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
                                                     </MultiTrigger>
                                                 </ControlTemplate.Triggers>
@@ -359,7 +331,7 @@ $ToolData = @(
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
-                            <TextBlock Text="ACTIVITY CONSOLE" FontSize="9" FontWeight="Bold" Foreground="#8B0000" FontFamily="Consolas" Margin="0,0,0,4"/>
+                            <TextBlock Text="ACTIVITY CONSOLE" FontSize="9" FontWeight="Bold" Foreground="#B8860B" FontFamily="Consolas" Margin="0,0,0,4"/>
                             <TextBox x:Name="LogBox"
                                 Grid.Row="1"
                                 Background="Transparent"
@@ -394,14 +366,14 @@ $ToolData = @(
     AllowsTransparency="True"
     Background="Transparent"
     FontFamily="Segoe UI">
-    <Border Background="#000000" BorderBrush="#8B0000" BorderThickness="1" CornerRadius="12" Padding="24">
+    <Border Background="#000000" BorderBrush="#B8860B" BorderThickness="1" CornerRadius="12" Padding="24">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="56"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <TextBlock Text="ValyaRssTool" FontSize="20" FontWeight="Bold" Foreground="#8B0000" Margin="0,0,0,12"/>
+                <TextBlock Text="ValyaRssTool" FontSize="20" FontWeight="Bold" Foreground="#B8860B" Margin="0,0,0,12"/>
                 <TextBlock TextWrapping="Wrap" Foreground="#FFFFFF" FontSize="13" Margin="0,0,0,12"
                            Text="All programs are downloaded automatically from their official GitHub repositories and saved in a neatly organized folder. None of your information is ever collected or modified."/>
                 <TextBlock TextWrapping="Wrap" Foreground="#FFFFFF" FontSize="13" Margin="0,0,0,16"
@@ -416,10 +388,10 @@ $ToolData = @(
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="CancelBtn" Grid.Column="0" Content="Cancel" Height="40"
-                        Background="Transparent" Foreground="#FFFFFF" BorderBrush="#8B0000" BorderThickness="1"
+                        Background="Transparent" Foreground="#FFFFFF" BorderBrush="#B8860B" BorderThickness="1"
                         Cursor="Hand" FontSize="13"/>
                 <Button x:Name="AcceptBtn" Grid.Column="2" Content="Accept &amp; Continue" Height="40"
-                        Background="#1A1A1A" Foreground="#8B0000" BorderBrush="#8B0000" BorderThickness="1"
+                        Background="#1A1A1A" Foreground="#B8860B" BorderBrush="#B8860B" BorderThickness="1"
                         Cursor="Hand" FontSize="13" FontWeight="SemiBold"/>
             </Grid>
         </Grid>
@@ -617,25 +589,51 @@ function Invoke-ToolDownloadAndRun {
 
     Write-Log "Fetching asset info for $name..."
 
-    $asset = Get-GitHubAssetUrl -ReleaseUrl $tool.URL
-    if (-not $asset) {
-        Write-Log "No .exe/.zip/.cmd/.bat asset found for $name - opening browser."
-        Set-Status "Ready" "No asset found, opened GitHub." "IDLE"
-        Start-Process $tool.URL
-        return
+    if ($tool.URL -match "github\.com/[^/]+/[^/]+/releases/latest$") {
+        $downloadUrl = $tool.URL -replace "/releases/latest$", "/releases"
+        try {
+            $apiUrl = $tool.URL -replace "github\.com/([^/]+)/([^/]+)/releases/latest$", 'api.github.com/repos/$1/$2/releases/latest'
+            $apiUrl = $apiUrl -replace "^github", "https://github" -replace "^https://https://", "https://"
+            $rel = Invoke-RestMethod -Uri $apiUrl -Headers @{"User-Agent"="ValyaRssTool"} -ErrorAction Stop
+            $asset = $rel.assets | Where-Object { $_.name -match "\.(exe|zip|cmd|bat|jar)$" } | Select-Object -First 1
+            if ($asset) {
+                $downloadUrl = $asset.browser_download_url
+                $assetName = $asset.name
+            } else {
+                Write-Log "No downloadable asset found for $name - opening browser."
+                Set-Status "Ready" "No asset found, opened GitHub." "IDLE"
+                Start-Process $tool.URL
+                return
+            }
+        } catch {
+            Write-Log "GitHub API lookup failed: $($_.Exception.Message) - opening browser."
+            Set-Status "Ready" "Could not resolve asset, opened GitHub." "IDLE"
+            Start-Process $tool.URL
+            return
+        }
+    } else {
+        $asset = Get-GitHubAssetUrl -ReleaseUrl $tool.URL
+        if (-not $asset) {
+            Write-Log "No .exe/.zip/.cmd/.bat asset found for $name - opening browser."
+            Set-Status "Ready" "No asset found, opened GitHub." "IDLE"
+            Start-Process $tool.URL
+            return
+        }
+        $downloadUrl = $asset.url
+        $assetName = $asset.name
     }
 
     $destDir  = "$installDir\$cat\$name"
     if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir -Force | Out-Null }
-    $destFile = "$destDir\$($asset.name)"
+    $destFile = "$destDir\$assetName"
 
     if (Test-Path $destFile) {
-        Write-Log "Cached: $($asset.name) - skipping download."
+        Write-Log "Cached: $assetName - skipping download."
     } else {
-        Write-Log "Downloading $($asset.name)..."
+        Write-Log "Downloading $assetName..."
         try {
-            Save-UrlToFile -Uri $asset.url -OutFile $destFile
-            Write-Log "Download complete: $($asset.name)"
+            Save-UrlToFile -Uri $downloadUrl -OutFile $destFile
+            Write-Log "Download complete: $assetName"
         } catch {
             $err = $_
             Write-Log "Download failed: $err"
@@ -645,8 +643,8 @@ function Invoke-ToolDownloadAndRun {
         }
     }
 
-    if ($asset.name -match "\.zip$") {
-        Write-Log "Extracting $($asset.name)..."
+    if ($assetName -match "\.zip$") {
+        Write-Log "Extracting $assetName..."
         try {
             Expand-Archive -Path $destFile -DestinationPath $destDir -Force -ErrorAction Stop
         } catch {
@@ -668,7 +666,7 @@ function Invoke-WebToolDownload {
     $name = $tool.Name
     $url  = $tool.URL
 
-    if ($url -match "\.(zip|exe|cmd|bat)$") {
+    if ($url -match "\.(zip|exe|cmd|bat|jar)$") {
         $fileName = ($url -split "/")[-1]
         $destDir  = "$installDir\$($tool.Category)\$name"
         if (-not (Test-Path $destDir)) { New-Item -ItemType Directory -Path $destDir -Force | Out-Null }
@@ -722,7 +720,7 @@ function Start-ButtonAnimation {
     $origW   = $Button.Width
     $origH   = $Button.Height
 
-    $flashColors = @("#8B0000", "#FFFFFF", "#8B0000", "#FF0000")
+    $flashColors = @("#B8860B", "#FFFFFF", "#B8860B", "#FF0000")
     $flashFg     = "#000000"
     $scales      = @(0.93, 0.96, 1.04, 1.0)
     $delays      = @(0, 80, 160, 250)
@@ -758,7 +756,7 @@ function Start-ButtonAnimation {
 # ==============================================================================
 # TABS AND BUTTONS
 # ==============================================================================
-$Categories = @("Orbdiff","Spokwn","Tonynoh","Praiselily","RedLotus","Zimmerman","NirSoft","Dependencies","Others","Echo","TRSSCommunity","Magnet","Forensics","SystemTools","Analysis","Misc","TeslaPro","Meow","Xeinn")
+$Categories = $ToolData | Select-Object -ExpandProperty Category -Unique | Sort-Object
 
 foreach ($cat in $Categories) {
     $tab = New-Object System.Windows.Controls.TabItem
@@ -809,13 +807,13 @@ foreach ($cat in $Categories) {
         $btn.Content = $btnStack
 
         switch ($t.Type) {
-            "Cmd"    { $btn.Background = "#1A0000" }
-            "GitHub" { $btn.Background = "#1A0000" }
-            "Web"    { $btn.Background = "#1A0000" }
-            "Link"   { $btn.Background = "#1A0000" }
+            "Cmd"    { $btn.Background = "#1C1C1C" }
+            "GitHub" { $btn.Background = "#1C1C1C" }
+            "Web"    { $btn.Background = "#1C1C1C" }
+            "Link"   { $btn.Background = "#1C1C1C" }
         }
 
-        $btnBg    = [Windows.Media.SolidColorBrush]::new([Windows.Media.Color]::FromRgb(0x1A, 0x00, 0x00))
+        $btnBg    = [Windows.Media.SolidColorBrush]::new([Windows.Media.Color]::FromRgb(0x1C, 0x1C, 0x1C))
         $btnScale = [Windows.Media.ScaleTransform]::new(1.0, 1.0)
 
         $btn.Template = [Windows.Markup.XamlReader]::Parse(
@@ -834,10 +832,10 @@ foreach ($cat in $Categories) {
             param($sender, $e)
             $btn = $sender
             $btn.Add_MouseEnter({
-                $btn.Background = "#2A0000"
+                $btn.Background = "#241C08"
             })
             $btn.Add_MouseLeave({
-                $btn.Background = "#1A0000"
+                $btn.Background = "#1C1C1C"
             })
         })
 
@@ -915,4 +913,3 @@ $OpenCmdBtn.Add_Click({
 # SHOW WINDOW
 # ==============================================================================
 $window.ShowDialog() | Out-Null
-
